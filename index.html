@@ -5,63 +5,112 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#080d1b">
-  <title>K.P AI — Your Personal Study Assistant</title>
-  <meta name="description" content="Meet K.P AI, an AI study assistant designed to help students learn, revise, and prepare for exams.">
+
+  <title>K.P AI — Your Personal AI Study Assistant</title>
+  <meta name="description" content="Meet K.P AI, your personal AI study assistant. Learn, revise, prepare for exams, and organize your studies.">
 
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #080d1b;
+      --card: #10182a;
+      --blue: #438cff;
+      --text: #f4f7ff;
+      --muted: #aab7d0;
+      --border: #26334c;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 80px;
+    }
 
     body {
-      font-family: Arial, sans-serif;
-      background: #080d1b;
-      color: #f4f7ff;
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
       line-height: 1.6;
     }
 
+    a {
+      -webkit-tap-highlight-color: transparent;
+    }
+
     header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 24px 8%;
-      border-bottom: 1px solid #202940;
+      padding: 20px 8%;
+      background: rgba(8, 13, 27, 0.92);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
     }
 
-    .logo { font-size: 25px; font-weight: 800; }
-    .logo span { color: #63a4ff; }
+    .logo {
+      font-size: 25px;
+      font-weight: 800;
+      letter-spacing: -1px;
+    }
+
+    .logo span {
+      color: #69aaff;
+    }
+
+    nav {
+      display: flex;
+      gap: 26px;
+    }
 
     nav a {
       color: #cbd5e8;
       text-decoration: none;
-      margin-left: 24px;
       font-size: 14px;
+      transition: color 0.2s;
+    }
+
+    nav a:hover {
+      color: #69aaff;
     }
 
     .hero {
-      min-height: 75vh;
+      min-height: 690px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       text-align: center;
-      padding: 70px 20px;
-      background: radial-gradient(ellipse at top, #172e59 0%, #080d1b 65%);
+      padding: 100px 20px;
+      background:
+        radial-gradient(ellipse at 50% 0%, #1a3564 0%, transparent 65%),
+        var(--bg);
     }
 
     .tag {
-      color: #8bbcff;
-      border: 1px solid #355b94;
+      display: inline-block;
+      color: #9bc6ff;
       background: #102344;
-      padding: 7px 15px;
+      border: 1px solid #355b94;
+      padding: 7px 16px;
       border-radius: 30px;
-      font-size: 13px;
-      margin-bottom: 25px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      margin-bottom: 28px;
     }
 
     h1 {
-      font-size: clamp(42px, 7vw, 76px);
+      max-width: 900px;
+      font-size: clamp(45px, 7vw, 82px);
       line-height: 1.08;
-      letter-spacing: -2px;
-      max-width: 850px;
+      letter-spacing: -3px;
     }
 
     h1 span {
@@ -71,160 +120,377 @@
       color: transparent;
     }
 
-    .hero p {
+    .hero-description {
       max-width: 620px;
-      color: #aab7d0;
+      color: var(--muted);
       margin: 25px 0 32px;
       font-size: 17px;
     }
 
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+    }
+
     .button {
-      display: inline-block;
-      background: #438cff;
-      color: white;
-      padding: 14px 25px;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      gap: 9px;
+      padding: 14px 23px;
       border-radius: 9px;
+      background: var(--blue);
+      color: white;
       text-decoration: none;
-      font-weight: bold;
-      margin: 5px;
+      font-weight: 700;
+      border: 1px solid transparent;
+      transition: transform 0.2s, background 0.2s;
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+      background: #3279ec;
     }
 
     .button.secondary {
       background: transparent;
-      border: 1px solid #394966;
+      border-color: #394966;
+      color: #e0e9fa;
     }
 
-    section { padding: 65px 8%; }
+    .button.secondary:hover {
+      background: #17233a;
+    }
+
+    .small-note {
+      margin-top: 17px;
+      color: #8291ad;
+      font-size: 12px;
+    }
+
+    section {
+      padding: 85px 8%;
+    }
 
     .section-title {
       text-align: center;
-      font-size: 34px;
+      font-size: clamp(29px, 4vw, 40px);
+      letter-spacing: -1px;
       margin-bottom: 12px;
     }
 
     .section-subtitle {
       text-align: center;
-      color: #aab7d0;
-      margin-bottom: 35px;
+      color: var(--muted);
+      margin: 0 auto 42px;
+      max-width: 580px;
     }
 
     .features {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 18px;
+      max-width: 1200px;
+      margin: 0 auto;
     }
 
     .feature {
-      background: #10182a;
-      border: 1px solid #26334c;
-      border-radius: 15px;
-      padding: 25px;
+      background: linear-gradient(145deg, #131e33, var(--card));
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 27px 23px;
+      transition: transform 0.2s, border-color 0.2s;
     }
 
-    .feature .icon { font-size: 28px; }
-    .feature h3 { margin: 13px 0 8px; }
-    .feature p { color: #aab7d0; font-size: 14px; }
+    .feature:hover {
+      transform: translateY(-5px);
+      border-color: #4777bd;
+    }
+
+    .feature-icon {
+      width: 52px;
+      height: 52px;
+      display: grid;
+      place-items: center;
+      border-radius: 13px;
+      background: #1a2c4a;
+      font-size: 26px;
+      margin-bottom: 20px;
+    }
+
+    .feature h3 {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+
+    .feature p {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .about {
+      background: #0c1323;
+      border-top: 1px solid #1b2740;
+      border-bottom: 1px solid #1b2740;
+    }
+
+    .about-content {
+      max-width: 760px;
+      margin: auto;
+      text-align: center;
+    }
+
+    .about-content p {
+      color: var(--muted);
+      margin-top: 18px;
+    }
 
     .download {
       text-align: center;
-      background: #10182a;
-      border-top: 1px solid #26334c;
-      border-bottom: 1px solid #26334c;
+      background:
+        radial-gradient(ellipse at 50% 100%, #152d52 0%, transparent 70%);
     }
 
     .download p {
-      color: #aab7d0;
-      margin: 15px auto 25px;
-      max-width: 550px;
+      color: var(--muted);
+      max-width: 580px;
+      margin: 16px auto 28px;
+    }
+
+    .download .button {
+      font-size: 16px;
+      padding: 16px 28px;
+    }
+
+    .requirements {
+      margin-top: 23px;
+      font-size: 12px;
+      color: #8291ad;
     }
 
     footer {
+      padding: 30px 8%;
+      border-top: 1px solid var(--border);
       text-align: center;
-      padding: 28px 15px;
-      color: #8391aa;
+      color: #8291ad;
       font-size: 13px;
     }
 
+    footer p + p {
+      margin-top: 7px;
+    }
+
+    footer a {
+      color: #9bc6ff;
+      text-decoration: none;
+    }
+
+    @media (max-width: 950px) {
+      .features {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
     @media (max-width: 600px) {
-      header { padding: 18px 5%; }
-      nav a { margin-left: 10px; font-size: 12px; }
-      .hero { min-height: 65vh; }
-      h1 { letter-spacing: -1px; }
-      section { padding: 50px 6%; }
+      header {
+        padding: 17px 5%;
+      }
+
+      .logo {
+        font-size: 22px;
+      }
+
+      nav {
+        gap: 14px;
+      }
+
+      nav a {
+        font-size: 12px;
+      }
+
+      .hero {
+        min-height: 590px;
+        padding: 75px 20px;
+      }
+
+      h1 {
+        letter-spacing: -1.5px;
+      }
+
+      .hero-description {
+        font-size: 15px;
+      }
+
+      section {
+        padding: 65px 6%;
+      }
+
+      .features {
+        grid-template-columns: 1fr;
+      }
+
+      .feature {
+        padding: 23px;
+      }
+
+      .buttons {
+        flex-direction: column;
+        width: 100%;
+        max-width: 320px;
+      }
+
+      .button {
+        width: 100%;
+      }
     }
   </style>
 </head>
 
 <body>
+
   <header>
-    <div class="logo">K.P <span>AI</span></div>
+    <a href="#" class="logo" style="text-decoration:none;color:inherit;">
+      K.P <span>AI</span>
+    </a>
+
     <nav>
       <a href="#features">Features</a>
+      <a href="#about">About</a>
       <a href="#download">Download</a>
     </nav>
   </header>
 
   <main>
+
     <section class="hero">
       <div class="tag">YOUR PERSONAL AI STUDY ASSISTANT</div>
-      <h1>Study smarter with <span>K.P AI.</span></h1>
-      <p>
-        Ask questions, understand difficult topics, prepare for exams,
-        and organize your studies with one simple AI assistant.
+
+      <h1>
+        Study smarter.<br>
+        Learn with <span>K.P AI.</span>
+      </h1>
+
+      <p class="hero-description">
+        Your AI-powered study companion for understanding difficult
+        topics, preparing for exams, and organizing your learning —
+        right from your Windows computer.
       </p>
-      <div>
-        <a class="button" href="#download">Get K.P AI ↓</a>
-        <a class="button secondary" href="#features">Explore features</a>
+
+      <div class="buttons">
+        <a class="button"
+           href="https://github.com/RichChiken/kp-ai-website/releases/download/v1.0.0/K.P.AI.Setup.exe">
+          ⬇ Download K.P AI
+        </a>
+
+        <a class="button secondary" href="#features">
+          Explore Features →
+        </a>
       </div>
+
+      <p class="small-note">
+        Windows installer · Local AI model download required
+      </p>
     </section>
 
     <section id="features">
-      <h2 class="section-title">Everything you need to study</h2>
-      <p class="section-subtitle">Built to make everyday learning easier.</p>
+      <h2 class="section-title">Built for better learning.</h2>
+
+      <p class="section-subtitle">
+        Useful study features, brought together in one desktop application.
+      </p>
 
       <div class="features">
+
         <article class="feature">
-          <div class="icon">🤖</div>
+          <div class="feature-icon">🤖</div>
           <h3>AI Chat</h3>
-          <p>Ask questions and get explanations to help you understand your subjects.</p>
+          <p>
+            Ask questions, explore concepts, and get explanations
+            to help you understand your subjects.
+          </p>
         </article>
 
         <article class="feature">
-          <div class="icon">📚</div>
+          <div class="feature-icon">📚</div>
           <h3>Study Tools</h3>
-          <p>Use learning tools to revise topics and prepare for school exams.</p>
+          <p>
+            Make revision and exam preparation easier with
+            learning tools built into the application.
+          </p>
         </article>
 
         <article class="feature">
-          <div class="icon">🗓️</div>
+          <div class="feature-icon">🗓️</div>
           <h3>Study Planner</h3>
-          <p>Organize your tasks and build a more consistent study routine.</p>
+          <p>
+            Organize your study tasks and keep track of what
+            you need to learn next.
+          </p>
         </article>
 
         <article class="feature">
-          <div class="icon">🔒</div>
+          <div class="feature-icon">💻</div>
           <h3>Local AI</h3>
-          <p>Designed to run AI locally on your computer after the required software and model are installed.</p>
+          <p>
+            Run the AI model on your own computer after setup.
+            The initial installation requires an internet connection.
+          </p>
         </article>
+
+      </div>
+    </section>
+
+    <section class="about" id="about">
+      <div class="about-content">
+        <h2 class="section-title">Learning, made simpler.</h2>
+
+        <p>
+          K.P AI is a student-focused AI study assistant designed
+          to make learning more accessible and help students
+          explore topics at their own pace.
+        </p>
+
+        <p>
+          AI answers can sometimes be inaccurate, so verify important
+          facts and use your textbooks and teachers as trusted references.
+        </p>
       </div>
     </section>
 
     <section class="download" id="download">
-      <h2 class="section-title">Ready to meet K.P AI?</h2>
+      <h2 class="section-title">Meet your new study companion.</h2>
+
       <p>
-        Get the Windows installer and start exploring your AI study assistant.
-        The download will be available here once the official release is published.
+        Download K.P AI for Windows and explore a different way
+        to approach everyday studying.
       </p>
-      <a class="button" href="https://github.com/" target="_blank" rel="noopener noreferrer">
-        Visit GitHub
+
+      <a class="button"
+         href="https://github.com/RichChiken/kp-ai-website/releases/download/v1.0.0/K.P.AI.Setup.exe">
+        ⬇ Download for Windows
       </a>
+
+      <p class="requirements">
+        Requires Windows 10/11 · Internet needed for initial setup and model download
+      </p>
     </section>
+
   </main>
 
   <footer>
-    <p>© 2026 K.P AI · An independent student project</p>
-    <p>AI-generated answers can sometimes be incorrect. Always verify important information.</p>
+    <p><strong>K.P AI</strong> · An independent student project</p>
+    <p>
+      Built to support learning. AI-generated answers may be incorrect.
+    </p>
+    <p>
+      <a href="https://github.com/RichChiken/kp-ai-website">
+        View project on GitHub
+      </a>
+    </p>
   </footer>
+
 </body>
 </html>
 ```
