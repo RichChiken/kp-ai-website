@@ -7,12 +7,12 @@
   <meta name="theme-color" content="#080d1b">
 
   <title>K.P AI — Your Personal AI Study Assistant</title>
-  <meta name="description" content="Meet K.P AI, your personal AI study assistant. Learn, revise, prepare for exams, and organize your studies.">
+  <meta name="description" content="Meet K.P AI, your personal AI study assistant for learning, revision, and exam preparation.">
 
   <style>
     :root {
       --bg: #080d1b;
-      --card: #10182a;
+      --card: #111b2e;
       --blue: #438cff;
       --text: #f4f7ff;
       --muted: #aab7d0;
@@ -27,7 +27,7 @@
 
     html {
       scroll-behavior: smooth;
-      scroll-padding-top: 80px;
+      scroll-padding-top: 85px;
     }
 
     body {
@@ -49,15 +49,17 @@
       justify-content: space-between;
       align-items: center;
       padding: 20px 8%;
-      background: rgba(8, 13, 27, 0.92);
+      background: rgba(8, 13, 27, 0.94);
       backdrop-filter: blur(14px);
       border-bottom: 1px solid var(--border);
     }
 
     .logo {
-      font-size: 25px;
+      font-size: 26px;
       font-weight: 800;
       letter-spacing: -1px;
+      text-decoration: none;
+      color: var(--text);
     }
 
     .logo span {
@@ -66,14 +68,13 @@
 
     nav {
       display: flex;
-      gap: 26px;
+      gap: 25px;
     }
 
     nav a {
       color: #cbd5e8;
       text-decoration: none;
       font-size: 14px;
-      transition: color 0.2s;
     }
 
     nav a:hover {
@@ -81,29 +82,28 @@
     }
 
     .hero {
-      min-height: 690px;
+      min-height: 680px;
       display: flex;
       flex-direction: column;
-      align-items: center;
       justify-content: center;
+      align-items: center;
       text-align: center;
       padding: 100px 20px;
       background:
-        radial-gradient(ellipse at 50% 0%, #1a3564 0%, transparent 65%),
+        radial-gradient(ellipse at 50% 0%, #1a3564 0%, transparent 68%),
         var(--bg);
     }
 
     .tag {
-      display: inline-block;
-      color: #9bc6ff;
-      background: #102344;
-      border: 1px solid #355b94;
       padding: 7px 16px;
+      margin-bottom: 28px;
       border-radius: 30px;
+      border: 1px solid #355b94;
+      background: #102344;
+      color: #9bc6ff;
       font-size: 12px;
       font-weight: 700;
       letter-spacing: 1px;
-      margin-bottom: 28px;
     }
 
     h1 {
@@ -114,7 +114,7 @@
     }
 
     h1 span {
-      background: linear-gradient(90deg, #65a9ff, #b8d6ff);
+      background: linear-gradient(90deg, #65a9ff, #c2ddff);
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
@@ -122,8 +122,8 @@
 
     .hero-description {
       max-width: 620px;
-      color: var(--muted);
       margin: 25px 0 32px;
+      color: var(--muted);
       font-size: 17px;
     }
 
@@ -136,17 +136,17 @@
 
     .button {
       display: inline-flex;
-      justify-content: center;
       align-items: center;
+      justify-content: center;
       gap: 9px;
-      padding: 14px 23px;
+      padding: 14px 24px;
       border-radius: 9px;
+      border: 1px solid transparent;
       background: var(--blue);
       color: white;
       text-decoration: none;
       font-weight: 700;
-      border: 1px solid transparent;
-      transition: transform 0.2s, background 0.2s;
+      transition: 0.2s ease;
     }
 
     .button:hover {
@@ -175,17 +175,17 @@
     }
 
     .section-title {
+      margin-bottom: 12px;
       text-align: center;
       font-size: clamp(29px, 4vw, 40px);
       letter-spacing: -1px;
-      margin-bottom: 12px;
     }
 
     .section-subtitle {
-      text-align: center;
-      color: var(--muted);
-      margin: 0 auto 42px;
       max-width: 580px;
+      margin: 0 auto 42px;
+      color: var(--muted);
+      text-align: center;
     }
 
     .features {
@@ -193,14 +193,14 @@
       grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 18px;
       max-width: 1200px;
-      margin: 0 auto;
+      margin: auto;
     }
 
     .feature {
-      background: linear-gradient(145deg, #131e33, var(--card));
+      padding: 27px 23px;
       border: 1px solid var(--border);
       border-radius: 16px;
-      padding: 27px 23px;
+      background: linear-gradient(145deg, #131e33, var(--card));
       transition: transform 0.2s, border-color 0.2s;
     }
 
@@ -210,19 +210,19 @@
     }
 
     .feature-icon {
-      width: 52px;
-      height: 52px;
       display: grid;
       place-items: center;
+      width: 52px;
+      height: 52px;
+      margin-bottom: 20px;
       border-radius: 13px;
       background: #1a2c4a;
       font-size: 26px;
-      margin-bottom: 20px;
     }
 
     .feature h3 {
-      font-size: 18px;
       margin-bottom: 10px;
+      font-size: 18px;
     }
 
     .feature p {
@@ -243,31 +243,34 @@
     }
 
     .about-content p {
-      color: var(--muted);
       margin-top: 18px;
+      color: var(--muted);
     }
 
     .download {
       text-align: center;
-      background:
-        radial-gradient(ellipse at 50% 100%, #152d52 0%, transparent 70%);
+      background: radial-gradient(
+        ellipse at 50% 100%,
+        #152d52 0%,
+        transparent 70%
+      );
     }
 
     .download p {
-      color: var(--muted);
       max-width: 580px;
       margin: 16px auto 28px;
+      color: var(--muted);
     }
 
     .download .button {
-      font-size: 16px;
       padding: 16px 28px;
+      font-size: 16px;
     }
 
     .requirements {
-      margin-top: 23px;
+      margin-top: 23px !important;
+      color: #8291ad !important;
       font-size: 12px;
-      color: #8291ad;
     }
 
     footer {
@@ -303,7 +306,7 @@
       }
 
       nav {
-        gap: 14px;
+        gap: 12px;
       }
 
       nav a {
@@ -331,10 +334,6 @@
         grid-template-columns: 1fr;
       }
 
-      .feature {
-        padding: 23px;
-      }
-
       .buttons {
         flex-direction: column;
         width: 100%;
@@ -351,9 +350,7 @@
 <body>
 
   <header>
-    <a href="#" class="logo" style="text-decoration:none;color:inherit;">
-      K.P <span>AI</span>
-    </a>
+    <a href="#" class="logo">K.P <span>AI</span></a>
 
     <nav>
       <a href="#features">Features</a>
@@ -374,13 +371,15 @@
 
       <p class="hero-description">
         Your AI-powered study companion for understanding difficult
-        topics, preparing for exams, and organizing your learning —
+        topics, preparing for exams, and organizing your learning
         right from your Windows computer.
       </p>
 
       <div class="buttons">
-        <a class="button"
-           href="https://github.com/RichChiken/kp-ai-website/releases/download/v1.0.0/K.P.AI.Setup.exe">
+        <a
+          class="button"
+          href="https://github.com/RichChiken/kp-ai-website/releases/download/v1.0.0/K.P.AI.Setup.exe"
+        >
           ⬇ Download K.P AI
         </a>
 
@@ -390,7 +389,7 @@
       </div>
 
       <p class="small-note">
-        Windows installer · Local AI model download required
+        Windows installer · Internet required for initial setup
       </p>
     </section>
 
@@ -398,7 +397,7 @@
       <h2 class="section-title">Built for better learning.</h2>
 
       <p class="section-subtitle">
-        Useful study features, brought together in one desktop application.
+        Useful study features brought together in one desktop application.
       </p>
 
       <div class="features">
@@ -434,7 +433,7 @@
           <div class="feature-icon">💻</div>
           <h3>Local AI</h3>
           <p>
-            Run the AI model on your own computer after setup.
+            Run the AI model locally on your computer after setup.
             The initial installation requires an internet connection.
           </p>
         </article>
@@ -448,13 +447,13 @@
 
         <p>
           K.P AI is a student-focused AI study assistant designed
-          to make learning more accessible and help students
-          explore topics at their own pace.
+          to help learners explore topics and understand concepts
+          at their own pace.
         </p>
 
         <p>
-          AI answers can sometimes be inaccurate, so verify important
-          facts and use your textbooks and teachers as trusted references.
+          AI answers can sometimes be inaccurate. Verify important
+          facts using your textbooks and teachers.
         </p>
       </div>
     </section>
@@ -467,13 +466,15 @@
         to approach everyday studying.
       </p>
 
-      <a class="button"
-         href="https://github.com/RichChiken/kp-ai-website/releases/download/v1.0.0/K.P.AI.Setup.exe">
+      <a
+        class="button"
+        href="https://github.com/RichChiken/kp-ai-website/releases/download/v1.0.0/K.P.AI.Setup.exe"
+      >
         ⬇ Download for Windows
       </a>
 
       <p class="requirements">
-        Requires Windows 10/11 · Internet needed for initial setup and model download
+        Windows 10/11 · Internet required for initial setup and model download
       </p>
     </section>
 
@@ -481,9 +482,7 @@
 
   <footer>
     <p><strong>K.P AI</strong> · An independent student project</p>
-    <p>
-      Built to support learning. AI-generated answers may be incorrect.
-    </p>
+    <p>AI-generated answers may be incorrect.</p>
     <p>
       <a href="https://github.com/RichChiken/kp-ai-website">
         View project on GitHub
