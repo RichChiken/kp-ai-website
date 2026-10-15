@@ -14,6 +14,8 @@
 </main><footer><div class="wrap">KPS School Portal · Student reports are reviewed by school staff. Do not submit sensitive personal information.</div></footer>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script>
 // Use only a Supabase project URL + publishable key in browser code. Never use a service-role key.
+const SUPABASE_URL = 'https://wmpofdbhozzoqgryapro.supabase.co';
+const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_vC1kmPAlVv2beaaUDxQUAQ_OuBASCxz';
 let sb = null, user = null, profile = null, authSubscription = null, busy = false;
 const $ = id => document.getElementById(id);
 const msg = (id, text, kind = '') => { const el = $(id); if (!el) return; el.textContent = text; el.className = 'status ' + kind; };
@@ -165,5 +167,8 @@ $('copyAssembly').addEventListener('click', async () => {
   const lines = (data || []).map(n => `${n.title}. ${n.content}`);
   $('assemblyText').value = lines.length ? 'Good morning. Please note the following school announcements.\n\n' + lines.join('\n\n') + '\n\nIf you recognise an item, please contact the authorized school office/teacher. Thank you.' : 'There are no current published announcements.';
 });
+$('projectUrl').value = SUPABASE_URL;
+$('publishableKey').value = SUPABASE_PUBLISHABLE_KEY;
+connect();
 // No credentials are saved by this page. Supabase handles session storage after you connect.
 </script></body></html>
