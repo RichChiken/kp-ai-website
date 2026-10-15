@@ -1,654 +1,169 @@
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#080d1b">
-<title>KPS Portal | School Hub</title>
-<style>
-:root{--bg:#080d1b;--panel:#111a2d;--panel2:#17233a;--text:#f2f5ff;--muted:#9baac4;--blue:#6c8cff;--cyan:#59e1ed;--border:#ffffff13;--red:#ff8295;--green:#6ce0ad}
-*{box-sizing:border-box}
-body{margin:0;background:radial-gradient(ellipse at 80% 0%,#405bbd20,transparent 40%),var(--bg);color:var(--text);font:15px system-ui,-apple-system,sans-serif}
-button,input,select,textarea{font:inherit}button{cursor:pointer}button:disabled{opacity:.5;cursor:not-allowed}
-button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
-button:hover:not(:disabled){filter:brightness(1.1);transform:translateY(-1px)}
-a{color:#a9bbff}h1{font-size:clamp(28px,4vw,42px);letter-spacing:-1.5px;margin:8px 0 12px}h2{font-size:22px}h3{font-size:16px}p{line-height:1.65}.muted{color:var(--muted)}.small{font-size:12px}.hidden{display:none!important}
-.topbar{position:sticky;top:0;z-index:5;background:#080d1beF;backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
-.topinner{max-width:1400px;margin:auto;padding:13px 22px;display:flex;align-items:center;justify-content:space-between;gap:14px}
-.brand{display:flex;gap:11px;align-items:center;font-weight:850;letter-spacing:.5px}.logo{width:43px;height:43px;border-radius:14px;background:linear-gradient(135deg,#6587ff,#8469ef);display:grid;place-items:center;font-size:21px}.brand small{display:block;color:var(--muted);font-size:10px;letter-spacing:1px}
-button{transition:.2s}.primary{background:linear-gradient(120deg,#6587ff,#8469ef);border:0;color:white;padding:11px 16px;border-radius:11px;font-weight:750}.secondary{background:#ffffff08;border:1px solid var(--border);color:var(--text);padding:10px 14px;border-radius:11px}.dangerbtn{background:#ff657418;color:#ffacb7;border:1px solid #ff65744a;padding:8px 11px;border-radius:9px}
-.layout{max-width:1400px;margin:auto;padding:22px;display:grid;grid-template-columns:225px minmax(0,1fr);gap:22px}
-.sidebar{height:fit-content;position:sticky;top:82px;background:#111a2ddd;border:1px solid var(--border);padding:15px;border-radius:19px}
-.navlabel{color:#71829f;font-size:10px;letter-spacing:1.5px;font-weight:800;margin:16px 9px 8px}
-.navbtn{display:block;width:100%;text-align:left;border:1px solid transparent;background:transparent;color:var(--muted);padding:12px;border-radius:11px;margin:3px 0}
-.navbtn.active,.navbtn:hover{background:#718cff18;color:white;border-color:#718cff35}
-.mobile-nav{display:none}.content{min-width:0}.page{animation:appear .25s ease}@keyframes appear{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
-.hero{padding:30px;border:1px solid #7e8dff35;border-radius:24px;background:radial-gradient(circle at 90% 20%,#7a69f52b,transparent 35%),linear-gradient(120deg,#19294a,#111a30)}
-.hero p{max-width:590px;color:#b6c5df}.eyebrow{color:var(--cyan);font-size:11px;font-weight:800;letter-spacing:2px}.actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:18px}
-.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:19px 0}
-.card{min-width:0;background:linear-gradient(145deg,#141f34,#0f1728);border:1px solid var(--border);border-radius:18px;padding:20px}
-.staticon{font-size:23px;margin-bottom:14px}.stat{font-size:25px;font-weight:850;margin:8px 0}
-.sectionhead{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:25px 0 13px}.sectionhead h2{margin:0}
-.list{display:grid;gap:10px}.item{display:flex;gap:13px;padding:15px;border:1px solid var(--border);border-radius:14px;background:#ffffff04;min-width:0}.itemicon{width:39px;height:39px;display:grid;place-items:center;background:#718cff18;border-radius:12px;flex-shrink:0}.item h3{margin:1px 0 6px}.item p{margin:0;color:var(--muted);font-size:13px;overflow-wrap:anywhere}
-.tag{display:inline-block;font-size:10px;padding:4px 8px;border-radius:20px;background:#718cff20;color:#c3ceff;font-weight:800}
-.field{display:grid;gap:7px;margin-bottom:14px;min-width:0}.field label{font-size:12px;font-weight:700;color:#c5d0e5}
-.field input,.field select,.field textarea{width:100%;min-width:0;border:1px solid #34425b;background:#0b1324;color:var(--text);padding:12px;border-radius:10px}
-.field textarea{min-height:100px;resize:vertical}.field input::placeholder,.field textarea::placeholder{color:#71809a}
-.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:0 14px}.full{grid-column:1/-1}
-.notice{padding:12px 14px;border-radius:11px;background:#6e89ff15;border:1px solid #6e89ff35;color:#cbd7ff;font-size:13px;line-height:1.55;margin:13px 0}
-.notice.error{background:#ff657415;border-color:#ff65743a;color:#ffbac4}.notice.success{background:#42d7a115;border-color:#42d7a13a;color:#9bf0ce}
-.authwrap{max-width:720px;margin:10px auto}.authswitch{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:20px 0}
-.authchoice{background:#111a2d;border:1px solid var(--border);border-radius:14px;padding:16px;color:var(--text);text-align:left}.authchoice.selected{border-color:#7c92ff;background:#6e89ff17}.authchoice strong{display:block;margin:7px 0}.authchoice span{color:var(--muted);font-size:12px}
-.tabs{display:flex;gap:7px;margin-bottom:18px}.tab{border:1px solid var(--border);background:transparent;color:var(--muted);border-radius:9px;padding:9px 13px}.tab.active{background:#6c8cff22;color:white;border-color:#6c8cff55}
-.empty{padding:25px;text-align:center;color:var(--muted);border:1px dashed #34425e;border-radius:14px}
-.tablewrap{overflow:auto}table{width:100%;min-width:610px;border-collapse:collapse;font-size:13px}th,td{padding:12px;text-align:left;border-bottom:1px solid var(--border);vertical-align:top}th{color:var(--muted);font-size:11px}
-footer{text-align:center;padding:10px 20px 30px;color:#71809a;font-size:11px}
-.toast{position:fixed;z-index:10;bottom:20px;right:20px;max-width:calc(100vw - 40px);background:#202d46;border:1px solid #445778;border-radius:12px;padding:14px 18px;box-shadow:0 10px 35px #0005}
-@media(max-width:900px){.layout{grid-template-columns:1fr;padding:15px}.sidebar{display:none}.mobile-nav{display:flex;gap:5px;overflow:auto;margin-bottom:17px}.mobile-nav .navbtn{white-space:nowrap;width:auto;flex-shrink:0}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:580px){.topinner{padding:11px 13px}.layout{padding:12px}.hero{padding:22px}.grid{grid-template-columns:1fr}.formgrid{grid-template-columns:1fr}.full{grid-column:auto}.authswitch{grid-template-columns:1fr}.brand small{display:none}.topinner .small{display:none}}
-@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
-</style>
-</head>
-<body>
-<header class="topbar">
-  <div class="topinner">
-    <a class="brand" href="#" id="homeBrand"><span class="logo">K</span><span>KPS PORTAL<small>SCHOOL HUB</small></span></a>
-    <div style="display:flex;align-items:center;gap:10px"><span id="headerStatus" class="muted small">Not signed in</span><button class="secondary" id="headerAuth">Sign in</button><button class="secondary hidden" id="signOut">Sign out</button></div>
-  </div>
-</header>
-
-<div class="layout">
-  <aside class="sidebar">
-    <div class="navlabel">WORKSPACE</div>
-    <button class="navbtn active" data-page="home">⌂ &nbsp; Overview</button>
-    <button class="navbtn" data-page="notices">▤ &nbsp; Notice Board</button>
-    <button class="navbtn" data-page="lostfound">⌕ &nbsp; Lost & Found</button>
-    <button class="navbtn" data-page="ai">✧ &nbsp; K.P AI</button>
-    <div class="navlabel">ACCOUNT</div>
-    <button class="navbtn" data-page="studentAuth">🎓 &nbsp; Student Sign In</button>
-    <button class="navbtn" data-page="staffAuth">🛡️ &nbsp; Staff Sign In</button>
-    <button class="navbtn hidden" id="staffNav" data-page="staff">▣ &nbsp; Staff Dashboard</button>
-    <div class="notice small">Your access and report permissions are enforced by Supabase.</div>
-  </aside>
-
-  <main class="content">
-    <nav class="mobile-nav">
-      <button class="navbtn active" data-page="home">⌂ Home</button>
-      <button class="navbtn" data-page="notices">Notices</button>
-      <button class="navbtn" data-page="lostfound">Lost & Found</button>
-      <button class="navbtn" data-page="ai">K.P AI</button>
-      <button class="navbtn" data-page="studentAuth">Student</button>
-      <button class="navbtn" data-page="staffAuth">Staff</button>
-      <button class="navbtn hidden" id="staffMobileNav" data-page="staff">Staff dashboard</button>
-    </nav>
-
-    <section class="page" id="page-home">
-      <div class="hero">
-        <div class="eyebrow">YOUR SCHOOL, ONE PLACE</div>
-        <h1>Welcome to KPS Portal<span style="color:var(--cyan)">.</span></h1>
-        <p>School notices, Lost & Found, and K.P AI — organized into one school hub.</p>
-        <div class="actions"><button class="primary" data-page="studentAuth">Student sign in ↗</button><button class="secondary" data-page="lostfound">Lost & Found</button></div>
-      </div>
-      <div class="grid">
-        <div class="card"><div class="staticon">▤</div><div class="muted small">SCHOOL UPDATES</div><div class="stat">Notices</div><p class="muted small">Read official school announcements.</p><button class="secondary" data-page="notices">View notices →</button></div>
-        <div class="card"><div class="staticon">⌕</div><div class="muted small">LOST SOMETHING?</div><div class="stat">Lost & Found</div><p class="muted small">Submit a report with your account.</p><button class="secondary" data-page="lostfound">Open reports →</button></div>
-        <div class="card"><div class="staticon">✧</div><div class="muted small">SCHOOL ASSISTANT</div><div class="stat">K.P AI</div><p class="muted small">AI assistant integration comes later.</p><button class="secondary" data-page="ai">Explore →</button></div>
-      </div>
-      <div class="sectionhead"><h2>Latest announcements</h2><button class="secondary" data-page="notices">View all</button></div>
-      <div class="list" id="homeNotices"><div class="empty">Loading notices…</div></div>
-    </section>
-
-    <section class="page hidden" id="page-notices">
-      <div class="eyebrow">STAY INFORMED</div><h1>Notice Board</h1><p class="muted">Official published announcements.</p>
-      <div id="noticeMessage" aria-live="polite"></div>
-      <div class="list" id="noticeList"><div class="empty">Loading notices…</div></div>
-      <div class="card hidden" id="noticeEditor" style="margin-top:18px">
-        <h2>Publish a notice</h2>
-        <form id="noticeForm">
-          <div class="field"><label for="noticeTitle">Title</label><input id="noticeTitle" maxlength="150" required></div>
-          <div class="field"><label for="noticeContent">Announcement</label><textarea id="noticeContent" maxlength="3000" required></textarea></div>
-          <label class="small"><input type="checkbox" id="noticePublish"> Publish immediately</label>
-          <div class="actions"><button class="primary" type="submit">Save notice</button></div>
-          <div id="noticeFormMessage" aria-live="polite"></div>
-        </form>
-      </div>
-    </section>
-
-    <section class="page hidden" id="page-lostfound">
-      <div class="eyebrow">FIND WHAT MATTERS</div><h1>Lost & Found</h1>
-      <p class="muted">Submit a report or check the reports you have submitted.</p>
-      <div id="reportTopMessage" aria-live="polite"></div>
-      <div class="card">
-        <h2>Submit a report</h2>
-        <p class="muted small">Sign in with your student account first. Reports are private to you and authorized staff.</p>
-        <form id="reportForm">
-          <div class="formgrid">
-            <div class="field"><label for="reportType">Report type</label><select id="reportType" required><option value="lost">I lost an item</option><option value="found">I found an item</option></select></div>
-            <div class="field"><label for="itemName">Item name</label><input id="itemName" maxlength="80" required placeholder="Blue water bottle"></div>
-            <div class="field"><label for="itemLocation">Location</label><input id="itemLocation" maxlength="100" required placeholder="School library"></div>
-            <div class="field"><label for="itemDate">Date</label><input id="itemDate" type="date" required></div>
-            <div class="field full"><label for="itemDescription">Description</label><textarea id="itemDescription" maxlength="600" required placeholder="Describe the item and identifying details"></textarea></div>
-          </div>
-          <div class="actions"><button class="primary" id="reportSubmit" type="submit">Submit report</button><button class="secondary" type="reset">Clear</button></div>
-          <div id="reportMessage" aria-live="polite"></div>
-        </form>
-      </div>
-      <div class="sectionhead"><h2>My reports</h2><button class="secondary" id="refreshReports">Refresh</button></div>
-      <div class="list" id="reportList"><div class="empty">Sign in to load your reports.</div></div>
-    </section>
-
-    <section class="page hidden" id="page-ai">
-      <div class="eyebrow">YOUR SCHOOL ASSISTANT</div><h1>K.P AI<span style="color:var(--cyan)">.</span></h1>
-      <div class="card"><div class="staticon">✧</div><h2>AI assistant integration is next</h2><p class="muted">The portal UI is ready for the K.P AI feature. We will connect its actual AI functionality separately.</p></div>
-    </section>
-
-    <section class="page hidden" id="page-studentAuth">
-      <div class="authwrap">
-        <div class="eyebrow">STUDENT ACCESS</div><h1>Student portal</h1><p class="muted">Sign in or create your student account.</p>
-        <div class="authswitch">
-          <button class="authchoice selected" data-authchoice="student"><div>🎓</div><strong>Student sign in</strong><span>Student resources and Lost & Found.</span></button>
-          <button class="authchoice" data-authchoice="staff"><div>🛡️</div><strong>Staff sign in</strong><span>Authorized school personnel only.</span></button>
-        </div>
-        <div class="card">
-          <div class="tabs"><button class="tab active" data-authmode="login">Sign in</button><button class="tab" data-authmode="signup">Create account</button></div>
-          <form id="studentAuthForm">
-            <div class="field signupfield hidden"><label for="studentName">Full name</label><input id="studentName" maxlength="100" autocomplete="name"></div>
-            <div class="field signupfield hidden"><label for="studentClass">Class / section</label><input id="studentClass" maxlength="30" placeholder="e.g. Class 10 A"></div>
-            <div class="field"><label for="studentEmail">Email address</label><input id="studentEmail" type="email" autocomplete="email" required></div>
-            <div class="field"><label for="studentPassword">Password</label><input id="studentPassword" type="password" minlength="8" autocomplete="current-password" required></div>
-            <button class="primary" id="studentSubmit" type="submit">Sign in as student</button>
-            <div id="studentAuthMessage" aria-live="polite"></div>
-          </form>
-          <p class="muted small">Account access is handled by Supabase Authentication.</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="page hidden" id="page-staffAuth">
-      <div class="authwrap"><div class="eyebrow">AUTHORIZED PERSONNEL</div><h1>Staff portal</h1><p class="muted">Staff access requires an assigned teacher_admin role.</p>
-        <div class="card"><div class="staticon">🛡️</div><form id="staffAuthForm">
-          <div class="field"><label for="staffEmail">Staff email</label><input id="staffEmail" type="email" autocomplete="username" required></div>
-          <div class="field"><label for="staffPassword">Password</label><input id="staffPassword" type="password" autocomplete="current-password" minlength="8" required></div>
-          <button class="primary" type="submit">Sign in as staff</button><div id="staffAuthMessage" aria-live="polite"></div>
-        </form><div class="notice">Staff access is verified against the database after authentication. A student account cannot use this page to gain staff permissions.</div>
-        <button class="secondary" data-page="studentAuth">Student sign in</button></div>
-      </div>
-    </section>
-
-    <section class="page hidden" id="page-staff">
-      <div class="eyebrow">AUTHORIZED WORKSPACE</div><h1>Staff dashboard</h1><p class="muted">Review reports and manage school notices.</p>
-      <div id="staffMessage" aria-live="polite"></div>
-      <div class="sectionhead"><h2>Lost & Found queue</h2><button class="secondary" id="refreshStaff">Refresh</button></div>
-      <div class="card tablewrap"><table><thead><tr><th>Item / details</th><th>Report</th><th>Date / location</th><th>Status</th><th>Action</th></tr></thead><tbody id="staffReports"><tr><td colspan="5">Loading reports…</td></tr></tbody></table></div>
-      <div class="sectionhead"><h2>Notice management</h2><button class="secondary" data-page="notices">Open notice board</button></div>
-      <div class="card"><p class="muted">Use the notice editor on the Notice Board to publish or update announcements.</p></div>
-    </section>
-  </main>
-</div>
-<footer>KPS Portal · Supabase connected frontend · K.P AI integration pending</footer>
-<div class="toast hidden" id="toast" role="status" aria-live="polite"></div>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>
-"use strict";
-
-/* SUPABASE CONFIGURATION */
-const SUPABASE_URL = "https://wmpofdbhozzoqgryapro.supabase.co";
-const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_vC1kmPAlVv2beaaUDxQUAQ_OuBASCxz";
-
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#08101f"><title>KPS School Portal</title><style>
+:root{color-scheme:dark;--bg:#08101f;--panel:#111d31;--panel2:#14243c;--blue:#78aaff;--text:#f4f7ff;--muted:#aab8d0;--border:#283a56;--green:#68d6b0;--red:#ff8888}*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:85px}body{margin:0;font:16px/1.6 system-ui,Segoe UI,Arial;background:var(--bg);color:var(--text)}a{color:var(--blue)}button,input,select,textarea{font:inherit}button{cursor:pointer;border:0;border-radius:10px;padding:11px 16px;background:#356fc3;color:white;font-weight:650}button.secondary{background:#263750}button.danger{background:#8f3545}.wrap{width:min(1100px,92%);margin:auto}.top{position:sticky;top:0;background:#08101fee;backdrop-filter:blur(12px);border-bottom:1px solid var(--border);z-index:4}.nav{min-height:70px;display:flex;align-items:center;justify-content:space-between;gap:14px}.brand{font-size:1.15rem;font-weight:800}.navlinks{display:flex;gap:18px;flex-wrap:wrap}.navlinks a{text-decoration:none;color:var(--text)}.hero{padding:64px 0 35px}.eyebrow{color:var(--blue);font-weight:750;letter-spacing:.13em;text-transform:uppercase;font-size:.78rem}.hero h1{font-size:clamp(2.3rem,6vw,4rem);line-height:1.08;max-width:780px;margin:12px 0}.muted{color:var(--muted)}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,270px),1fr));gap:16px}.card{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:22px}.section{padding:32px 0}.section h2{margin:0 0 8px;font-size:1.8rem}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}.formgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.field{display:flex;flex-direction:column;gap:5px}.field.full{grid-column:1/-1}input,select,textarea{background:#091426;color:var(--text);border:1px solid var(--border);border-radius:9px;padding:11px;width:100%}textarea{min-height:90px;resize:vertical}.notice{border:1px solid var(--border);background:#0c1729;border-radius:12px;padding:15px;margin:10px 0}.notice h3{margin:0}.pill{display:inline-block;border:1px solid var(--border);border-radius:999px;padding:2px 9px;font-size:.8rem;color:var(--green)}.hidden{display:none!important}.status{margin:12px 0;padding:10px 12px;border-radius:9px;background:#172a43}.status.error{color:#ffd1d1;background:#44202a}.status.ok{color:#b9ffe4;background:#12372f}.small{font-size:.88rem}.row{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}footer{padding:28px 0;border-top:1px solid var(--border);color:var(--muted);margin-top:35px}@media(max-width:650px){.nav{align-items:flex-start;padding:14px 0;flex-direction:column}.formgrid{grid-template-columns:1fr}.field.full{grid-column:auto}.hero{padding-top:42px}}
+</style></head><body>
+<header class="top"><div class="wrap nav"><a class="brand" href="#home">🎓 KPS School Portal</a><nav class="navlinks"><a href="#services">Services</a><a href="#lostfound">Lost &amp; Found</a><a href="#notices">Notice Board</a><a href="#account">Sign in</a><a href="#kpai">K.P AI</a></nav></div></header>
+<main class="wrap" id="home"><section class="hero"><div class="eyebrow">Krishna Public School</div><h1>Your school, <span style="color:var(--blue)">one portal.</span></h1><p class="muted" style="max-width:720px">School notices, Lost &amp; Found, and K.P AI — together in one place. Lost &amp; Found reports are reviewed by authorized school staff before a notice is published.</p><div class="actions"><a href="#lostfound"><button>Report an item</button></a><a href="#notices"><button class="secondary">View notices</button></a></div></section>
+<section class="section" id="services"><h2>Student services</h2><p class="muted">Useful school tools in one place.</p><div class="grid"><article class="card"><h3>🔎 Lost &amp; Found</h3><p class="muted">Report an item you lost or found and check your report status.</p><a href="#lostfound">Open Lost &amp; Found →</a></article><article class="card"><h3>📣 School Notice Board</h3><p class="muted">Browse notices approved by authorized school staff.</p><a href="#notices">View approved notices →</a></article><article class="card"><h3>🤖 K.P AI</h3><p class="muted">Open the school's AI study assistant.</p><a href="https://github.com/RichChiken/kp-ai-website/releases/tag/v1.0.0">K.P AI release →</a></article></div></section>
+<section class="section" id="account"><h2>Student / Staff sign in</h2><p class="muted">Create a student account with your real name and class. Staff access must be assigned by the project owner in Supabase.</p><div class="card"><div class="formgrid"><label class="field"><span>Email</span><input id="email" type="email" autocomplete="username" required placeholder="you@example.com"></label><label class="field"><span>Password</span><input id="password" type="password" autocomplete="current-password" required minlength="8" placeholder="At least 8 characters"></label><label class="field" id="nameWrap"><span>Full name (for sign-up)</span><input id="fullName" autocomplete="name" placeholder="Your full name"></label><label class="field" id="classWrap"><span>Class (for sign-up)</span><input id="studentClass" placeholder="e.g. 8-A"></label></div><div class="actions"><button id="signupBtn">Create student account</button><button class="secondary" id="loginBtn">Sign in</button><button class="secondary hidden" id="logoutBtn">Sign out</button></div><div id="authStatus" class="status" role="status">Set up Supabase config below before signing in.</div><p class="small muted">Use an email address you can access. If email confirmation is enabled, confirm your email before signing in. Never share your password.</p></div></section>
+<section class="section" id="lostfound"><h2>Report a lost or found item</h2><p class="muted">Sign in first. Student identity details stay private; only item details from approved notices are shown publicly.</p><div class="card"><form id="reportForm"><div class="formgrid"><label class="field"><span>Report type</span><select id="reportType" required><option value="lost">I lost an item</option><option value="found">I found an item</option></select></label><label class="field"><span>Item name</span><input id="itemName" required maxlength="100" placeholder="e.g. Blue water bottle"></label><label class="field full"><span>Description (avoid private information)</span><textarea id="description" required maxlength="1000" placeholder="Colour, brand, identifying details..."></textarea></label><label class="field"><span>Where was it lost/found?</span><input id="location" maxlength="160" placeholder="e.g. Library"></label><label class="field"><span>Date</span><input id="incidentDate" type="date"></label></div><div class="actions"><button type="submit">Submit for staff review</button></div></form><div id="reportStatus" class="status" role="status">Sign in to submit a report.</div></div><div class="card" style="margin-top:14px"><div class="row"><h3>My reports</h3><button class="secondary" id="refreshMine">Refresh</button></div><div id="myReports" class="muted">Sign in to see your reports.</div></div></section>
+<section class="section" id="notices"><h2>School Notice Board</h2><p class="muted">Only approved item notices appear here. Student names and classes are not shown.</p><div id="publicNotices"><p class="muted">Configure Supabase to load approved notices.</p></div></section>
+<section class="section hidden" id="admin"><h2>School Staff Dashboard</h2><p class="muted">Only accounts assigned the teacher_admin role can access moderation.</p><div class="row"><h3>Pending reports</h3><button id="refreshAdmin" class="secondary">Refresh</button></div><div id="adminReports"></div><div id="adminStatus" class="status"></div><h3>Assembly announcement</h3><textarea id="assemblyText" placeholder="Approved notices can be turned into an assembly announcement..."></textarea><button id="copyAssembly" class="secondary">Copy announcement</button></section>
+<section class="section" id="kpai"><div class="card"><h2>K.P AI</h2><p class="muted">Open the existing K.P AI project release.</p><a href="https://github.com/RichChiken/kp-ai-website/releases/tag/v1.0.0">Open K.P AI →</a></div></section>
+<section class="section"><details class="card"><summary><strong>Setup: connect Supabase</strong></summary><p class="muted small">Paste your Supabase Project URL and publishable key here for this browser session. For deployment, put them in the config section in this file. Never use a secret/service-role key in browser code.</p><label class="field"><span>Project URL</span><input id="projectUrl" placeholder="https://your-project.supabase.co"></label><label class="field" style="margin-top:10px"><span>Publishable key</span><input id="publishableKey" placeholder="sb_publishable_..."></label><button id="connectBtn" style="margin-top:12px">Connect</button><p class="small muted">A publishable key is safe to expose only when database Row Level Security policies are correctly configured.</p></details></section>
+</main><footer><div class="wrap">KPS School Portal · Student reports are reviewed by school staff. Do not submit sensitive personal information.</div></footer>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script>
+// Use only a Supabase project URL + publishable key in browser code. Never use a service-role key.
+let sb = null, user = null, profile = null, authSubscription = null, busy = false;
 const $ = id => document.getElementById(id);
-let sb = null;
-let currentUser = null;
-let currentProfile = null;
-let authMode = "login";
-let toastTimer = null;
-let noticeRows = [];
-
-const pages = ["home","notices","lostfound","ai","studentAuth","staffAuth","staff"];
-
-function esc(value) {
-  return String(value ?? "").replace(/[&<>"']/g, c => ({
-    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
-  })[c]);
+const msg = (id, text, kind = '') => { const el = $(id); if (!el) return; el.textContent = text; el.className = 'status ' + kind; };
+const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const prettyDate = value => value ? new Date(value).toLocaleString() : 'Date not given';
+function setBusy(value) { busy = value; ['signupBtn','loginBtn','logoutBtn','connectBtn'].forEach(id => { if ($(id)) $(id).disabled = value; }); }
+function configured() { if (!sb) { msg('authStatus', 'Connect Supabase first using the setup panel below.', 'error'); return false; } return true; }
+function connect() {
+  const url = $('projectUrl').value.trim().replace(/\/$/, '');
+  const key = $('publishableKey').value.trim();
+  if (!/^https:\/\/[a-z0-9-]+\.supabase\.co$/i.test(url) || !key) { msg('authStatus', 'Enter a valid Supabase Project URL and publishable key.', 'error'); return; }
+  if (sb && authSubscription) authSubscription.unsubscribe();
+  try { sb = window.supabase.createClient(url, key, { auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true } }); }
+  catch (e) { sb = null; msg('authStatus', 'Could not initialize Supabase: ' + e.message, 'error'); return; }
+  $('projectUrl').value = url; $('publishableKey').value = key;
+  authSubscription = sb.auth.onAuthStateChange((_event, session) => {
+    // Avoid doing Supabase calls inside the auth callback; schedule refresh outside it.
+    user = session?.user || null;
+    Promise.resolve().then(() => refreshSession());
+  }).data.subscription;
+  msg('authStatus', 'Connected to Supabase. Checking your session…', 'ok');
+  refreshSession();
 }
-
-function toast(message) {
-  $("toast").textContent = message;
-  $("toast").classList.remove("hidden");
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => $("toast").classList.add("hidden"), 3500);
-}
-
-function message(id, text, type = "") {
-  const el = $(id);
-  if (!el) return;
-  el.textContent = text;
-  el.className = type ? `notice ${type}` : "notice";
-}
-
-function clearMessage(id) {
-  const el = $(id);
-  if (el) { el.textContent = ""; el.className = ""; }
-}
-
-function go(page) {
-  if (!pages.includes(page)) page = "home";
-  if (page === "staff" && currentProfile?.role !== "teacher_admin") {
-    page = "staffAuth";
-    toast("Please sign in with an authorized staff account.");
-  }
-  pages.forEach(name => $(`page-${name}`).classList.toggle("hidden", name !== page));
-  document.querySelectorAll("[data-page].navbtn").forEach(b => b.classList.toggle("active", b.dataset.page === page));
-  window.scrollTo({top:0,behavior:"smooth"});
-  if (page === "notices") loadNotices();
-  if (page === "lostfound") loadMyReports();
-  if (page === "staff") loadStaffReports();
-}
-
-document.querySelectorAll("[data-page]").forEach(el => el.addEventListener("click", () => go(el.dataset.page)));
-$("homeBrand").addEventListener("click", e => { e.preventDefault(); go("home"); });
-$("headerAuth").addEventListener("click", () => go("studentAuth"));
-$("signOut").addEventListener("click", async () => {
+$('connectBtn').addEventListener('click', connect);
+async function refreshSession() {
   if (!sb) return;
-  const {error} = await sb.auth.signOut();
-  if (error) return toast(error.message);
-  currentUser = null;
-  currentProfile = null;
-  updateAccountUI();
-  go("home");
-  toast("Signed out.");
-});
-
-function setAuthMode(mode) {
-  authMode = mode;
-  document.querySelectorAll("[data-authmode]").forEach(b => b.classList.toggle("active", b.dataset.authmode === mode));
-  document.querySelectorAll(".signupfield").forEach(el => el.classList.toggle("hidden", mode !== "signup"));
-  $("studentName").required = mode === "signup";
-  $("studentClass").required = mode === "signup";
-  $("studentPassword").autocomplete = mode === "signup" ? "new-password" : "current-password";
-  $("studentSubmit").textContent = mode === "signup" ? "Create student account" : "Sign in as student";
-  clearMessage("studentAuthMessage");
-}
-document.querySelectorAll("[data-authmode]").forEach(b => b.addEventListener("click", () => setAuthMode(b.dataset.authmode)));
-document.querySelectorAll("[data-authchoice]").forEach(b => b.addEventListener("click", () => {
-  if (b.dataset.authchoice === "staff") go("staffAuth");
-  else go("studentAuth");
-}));
-
-function updateAccountUI() {
-  const signedIn = !!currentUser;
-  $("headerStatus").textContent = signedIn ? (currentProfile?.full_name || currentUser.email) : "Not signed in";
-  $("headerAuth").classList.toggle("hidden", signedIn);
-  $("signOut").classList.toggle("hidden", !signedIn);
-  $("staffNav").classList.toggle("hidden", currentProfile?.role !== "teacher_admin");
-  $("staffMobileNav").classList.toggle("hidden", currentProfile?.role !== "teacher_admin");
-  $("noticeEditor").classList.toggle("hidden", currentProfile?.role !== "teacher_admin");
-}
-
-function requireSupabase() {
-  if (!sb) throw new Error("Supabase is not configured. Check the publishable key in index.html.");
-}
-
-async function fetchProfile(user) {
-  const {data, error} = await sb.from("profiles")
-    .select("id,full_name,student_class,role")
-    .eq("id", user.id)
-    .maybeSingle();
-
-  if (error) throw error;
-  if (!data) throw new Error("Your profile is missing. Contact the portal administrator to repair your profile.");
-  return data;
-}
-
-async function refreshAccount() {
-  const {data, error} = await sb.auth.getSession();
-  if (error) throw error;
-  const session = data.session;
-  currentUser = session?.user ?? null;
-  currentProfile = null;
-
-  if (currentUser) {
-    try {
-      currentProfile = await fetchProfile(currentUser);
-    } catch (err) {
-      console.error("Profile load failed:", err);
-      // Preserve the authenticated session, but do not assume any role.
-    }
-  }
-  updateAccountUI();
-  return currentUser;
-}
-
-async function loadNotices() {
-  if (!sb) return;
-  $("noticeList").innerHTML = '<div class="empty">Loading notices…</div>';
-  $("homeNotices").innerHTML = '<div class="empty">Loading notices…</div>';
-
-  const {data, error} = await sb.from("public_notices")
-    .select("id,title,content,created_at")
-    .eq("published", true)
-    .order("created_at", {ascending:false})
-    .limit(30);
-
-  if (error) {
-    const html = `<div class="empty">Could not load notices: ${esc(error.message)}</div>`;
-    $("noticeList").innerHTML = html;
-    $("homeNotices").innerHTML = html;
-    return;
-  }
-
-  noticeRows = data || [];
-  const html = noticeRows.length ? noticeRows.map(n => `
-    <article class="item">
-      <div class="itemicon">📢</div>
-      <div style="flex:1;min-width:0">
-        <span class="tag">ANNOUNCEMENT</span>
-        <h3 style="margin-top:8px">${esc(n.title)}</h3>
-        <p>${esc(n.content).replace(/\n/g,"<br>")}</p>
-        <p style="margin-top:7px;font-size:11px">${esc(new Date(n.created_at).toLocaleDateString())}</p>
-      </div>
-    </article>`).join("") : '<div class="empty">No published notices yet.</div>';
-
-  $("noticeList").innerHTML = html;
-  $("homeNotices").innerHTML = html;
-}
-
-$("studentAuthForm").addEventListener("submit", async event => {
-  event.preventDefault();
-  if (!sb) return message("studentAuthMessage","Supabase is not configured. Add your publishable key first.","error");
-  const email = $("studentEmail").value.trim();
-  const password = $("studentPassword").value;
-  const button = $("studentSubmit");
-  button.disabled = true;
-  clearMessage("studentAuthMessage");
-
-  try {
-    if (authMode === "signup") {
-      const fullName = $("studentName").value.trim();
-      const studentClass = $("studentClass").value.trim();
-      if (!fullName || !studentClass) throw new Error("Enter your full name and class.");
-
-      const {data, error} = await sb.auth.signUp({
-        email, password,
-        options: {data:{full_name:fullName,student_class:studentClass}}
-      });
-      if (error) throw error;
-
-      if (!data.session) {
-        message("studentAuthMessage","Account signup submitted. Check your email for the Supabase verification link, then sign in.","success");
-      } else {
-        await refreshAccount();
-        message("studentAuthMessage","Student account created and signed in.","success");
-        go("home");
-        await loadMyReports();
-      }
+  const { data, error } = await sb.auth.getSession();
+  if (error) { msg('authStatus', 'Session error: ' + error.message, 'error'); return; }
+  user = data.session?.user || null; profile = null;
+  if (user) {
+    const { data: p, error: profileError } = await sb.from('profiles').select('id,role,full_name,student_class').eq('id', user.id).maybeSingle();
+    if (profileError) {
+      msg('authStatus', 'Signed in, but profile could not be loaded: ' + profileError.message + '. Check the profiles table and its SELECT policy.', 'error');
+    } else if (!p) {
+      msg('authStatus', 'Signed in, but no profile exists for this account. Check the handle_new_user trigger and profiles table.', 'error');
     } else {
-      const {error} = await sb.auth.signInWithPassword({email,password});
-      if (error) throw error;
-      await refreshAccount();
-      if (currentProfile?.role !== "student") {
-        await sb.auth.signOut();
-        currentUser = null;
-        currentProfile = null;
-        updateAccountUI();
-        throw new Error("This account is not registered with the student role. Use the correct sign-in page.");
-      }
-      message("studentAuthMessage","Signed in successfully.","success");
-      go("home");
-      await loadNotices();
+      profile = p;
+      msg('authStatus', `Signed in: ${user.email}${profile.role === 'teacher_admin' ? ' · Teacher admin' : profile.role === 'student' ? ' · Student' : ' · Role not recognized'}`, profile.role === 'student' || profile.role === 'teacher_admin' ? 'ok' : 'error');
     }
-  } catch (err) {
-    message("studentAuthMessage",err.message || "Authentication failed.","error");
-  } finally {
-    button.disabled = false;
+    $('logoutBtn').classList.remove('hidden'); $('signupBtn').classList.add('hidden'); $('loginBtn').classList.add('hidden');
+    $('nameWrap').classList.add('hidden'); $('classWrap').classList.add('hidden');
+    const isStaff = profile?.role === 'teacher_admin';
+    $('admin').classList.toggle('hidden', !isStaff);
+    if (profile?.role !== 'student' && !isStaff) msg('authStatus', 'Your account has no valid portal role. Ask the project owner to assign student or teacher_admin in profiles.', 'error');
+    await Promise.all([loadMine(), loadNotices()]);
+    if (isStaff) await loadAdmin();
+    else $('adminReports').textContent = '';
+  } else {
+    profile = null;
+    msg('authStatus', 'Not signed in. Create a student account or sign in.');
+    $('logoutBtn').classList.add('hidden'); $('signupBtn').classList.remove('hidden'); $('loginBtn').classList.remove('hidden');
+    $('nameWrap').classList.remove('hidden'); $('classWrap').classList.remove('hidden'); $('admin').classList.add('hidden');
+    $('myReports').textContent = 'Sign in to see your reports.'; $('adminReports').textContent = '';
+    await loadNotices();
   }
-});
-
-$("staffAuthForm").addEventListener("submit", async event => {
-  event.preventDefault();
-  if (!sb) return message("staffAuthMessage","Supabase is not configured. Add your publishable key first.","error");
-  const email = $("staffEmail").value.trim();
-  const password = $("staffPassword").value;
-  const button = $("staffAuthForm").querySelector('button[type="submit"]');
-  button.disabled = true;
-  clearMessage("staffAuthMessage");
-
-  try {
-    const {error} = await sb.auth.signInWithPassword({email,password});
-    if (error) throw error;
-    await refreshAccount();
-
-    if (currentProfile?.role !== "teacher_admin") {
-      await sb.auth.signOut();
-      currentUser = null;
-      currentProfile = null;
-      updateAccountUI();
-      throw new Error("Staff access denied. This account does not have the teacher_admin role.");
-    }
-    message("staffAuthMessage","Staff sign-in successful.","success");
-    go("staff");
-    await loadStaffReports();
-  } catch (err) {
-    message("staffAuthMessage",err.message || "Staff sign-in failed.","error");
-  } finally {
-    button.disabled = false;
-  }
-});
-
-$("reportForm").addEventListener("submit", async event => {
-  event.preventDefault();
-  if (!sb) return message("reportMessage","Supabase is not configured.","error");
-  if (!currentUser || !currentProfile) {
-    message("reportMessage","Please sign in with your student account first.","error");
-    return;
-  }
-  if (currentProfile.role !== "student") {
-    message("reportMessage","Only student accounts can submit student reports.","error");
-    return;
-  }
-
-  const report = {
-    student_id: currentUser.id,
-    report_type: $("reportType").value,
-    item_name: $("itemName").value.trim(),
-    location: $("itemLocation").value.trim(),
-    incident_date: $("itemDate").value,
-    description: $("itemDescription").value.trim(),
-    status: "pending"
-  };
-  if (!report.item_name || !report.location || !report.incident_date || !report.description) {
-    return message("reportMessage","Complete all fields before submitting.","error");
-  }
-
-  const button = $("reportSubmit");
-  button.disabled = true;
-  try {
-    const {error} = await sb.from("lost_found_reports").insert(report);
-    if (error) throw error;
-    $("reportForm").reset();
-    setDefaultDate();
-    message("reportMessage","Report submitted. It is pending staff review.","success");
-    await loadMyReports();
-  } catch (err) {
-    message("reportMessage",err.message || "Could not submit report.","error");
-  } finally {
-    button.disabled = false;
-  }
-});
-
-function statusTag(status) {
-  return `<span class="tag">${esc(String(status).toUpperCase())}</span>`;
 }
-
-async function loadMyReports() {
+$('signupBtn').addEventListener('click', async () => {
+  if (!configured() || busy) return;
+  const email = $('email').value.trim(), password = $('password').value;
+  const full_name = $('fullName').value.trim(), student_class = $('studentClass').value.trim();
+  if (!email || password.length < 8 || !full_name || !student_class) return msg('authStatus', 'Enter a valid email, password (at least 8 characters), full name, and class.', 'error');
+  setBusy(true);
+  try {
+    const { data, error } = await sb.auth.signUp({ email, password, options: { data: { full_name, student_class } } });
+    if (error) return msg('authStatus', error.message, 'error');
+    if (data.session) { msg('authStatus', 'Account created. Loading your profile…', 'ok'); await refreshSession(); }
+    else msg('authStatus', 'Account created. Check your email to confirm it, then sign in.', 'ok');
+  } catch (e) { msg('authStatus', e.message || 'Sign-up failed.', 'error'); }
+  finally { setBusy(false); }
+});
+$('loginBtn').addEventListener('click', async () => {
+  if (!configured() || busy) return;
+  const email = $('email').value.trim(), password = $('password').value;
+  if (!email || !password) return msg('authStatus', 'Enter your email and password.', 'error');
+  setBusy(true);
+  try { const { error } = await sb.auth.signInWithPassword({ email, password }); if (error) return msg('authStatus', error.message, 'error'); await refreshSession(); }
+  catch (e) { msg('authStatus', e.message || 'Sign-in failed.', 'error'); }
+  finally { setBusy(false); }
+});
+$('logoutBtn').addEventListener('click', async () => {
   if (!sb) return;
-  if (!currentUser) {
-    $("reportList").innerHTML = '<div class="empty">Sign in to view your reports.</div>';
-    return;
-  }
-
-  $("reportList").innerHTML = '<div class="empty">Loading your reports…</div>';
-  const {data,error} = await sb.from("lost_found_reports")
-    .select("id,report_type,item_name,description,location,incident_date,status,created_at")
-    .eq("student_id",currentUser.id)
-    .order("created_at",{ascending:false})
-    .limit(50);
-
-  if (error) {
-    $("reportList").innerHTML = `<div class="empty">Could not load reports: ${esc(error.message)}</div>`;
-    return;
-  }
-  if (!data?.length) {
-    $("reportList").innerHTML = '<div class="empty">You have not submitted any reports yet.</div>';
-    return;
-  }
-  $("reportList").innerHTML = data.map(r => `
-    <article class="item">
-      <div class="itemicon">${r.report_type === "lost" ? "🔎" : "📦"}</div>
-      <div style="flex:1;min-width:0">
-        ${statusTag(r.status)}
-        <h3 style="margin-top:8px">${esc(r.item_name)}</h3>
-        <p>${esc(r.description)}</p>
-        <p style="margin-top:6px">📍 ${esc(r.location)} · ${esc(r.incident_date)}</p>
-      </div>
-    </article>`).join("");
-}
-
-async function loadStaffReports() {
-  if (!sb || currentProfile?.role !== "teacher_admin") return;
-  $("staffReports").innerHTML = '<tr><td colspan="5">Loading…</td></tr>';
-
-  const {data,error} = await sb.from("lost_found_reports")
-    .select("id,student_id,report_type,item_name,description,location,incident_date,status,created_at")
-    .order("created_at",{ascending:false}).limit(100);
-
-  if (error) {
-    $("staffReports").innerHTML = `<tr><td colspan="5">${esc(error.message)}</td></tr>`;
-    return;
-  }
-  if (!data?.length) {
-    $("staffReports").innerHTML = '<tr><td colspan="5">No reports submitted yet.</td></tr>';
-    return;
-  }
-
-  $("staffReports").innerHTML = data.map(r => `
-    <tr>
-      <td><strong>${esc(r.item_name)}</strong><p class="muted small">${esc(r.description)}</p></td>
-      <td>${esc(r.report_type)}</td>
-      <td>${esc(r.incident_date)}<br><span class="muted small">${esc(r.location)}</span></td>
-      <td>${statusTag(r.status)}</td>
-      <td><select aria-label="Change report status" data-report-status="${esc(r.id)}">
-        ${["pending","approved","rejected","returned"].map(s => `<option value="${s}" ${s===r.status?"selected":""}>${s}</option>`).join("")}
-      </select><button class="secondary" data-save-report="${esc(r.id)}" style="margin-top:5px">Save</button></td>
-    </tr>`).join("");
-}
-
-$("staffReports").addEventListener("click", async event => {
-  const button = event.target.closest("[data-save-report]");
-  if (!button) return;
-  if (currentProfile?.role !== "teacher_admin") return toast("Staff access required.");
-
-  const id = button.dataset.saveReport;
-  const select = $("staffReports").querySelector(`[data-report-status="${CSS.escape(id)}"]`);
-  if (!select) return;
-  button.disabled = true;
-
-  try {
-    const {error} = await sb.from("lost_found_reports")
-      .update({status:select.value}).eq("id",id);
-    if (error) throw error;
-    message("staffMessage","Report status updated.","success");
-    await loadStaffReports();
-  } catch (err) {
-    message("staffMessage",err.message || "Could not update report.","error");
-  } finally {
-    button.disabled = false;
-  }
+  const { error } = await sb.auth.signOut();
+  if (error) return msg('authStatus', error.message, 'error');
+  user = null; profile = null; await refreshSession();
 });
-
-$("noticeForm").addEventListener("submit", async event => {
-  event.preventDefault();
-  if (!sb || currentProfile?.role !== "teacher_admin") {
-    return message("noticeFormMessage","Authorized staff access is required.","error");
-  }
-
-  const title = $("noticeTitle").value.trim();
-  const content = $("noticeContent").value.trim();
-  const published = $("noticePublish").checked;
-  if (!title || !content) return message("noticeFormMessage","Enter a title and announcement.","error");
-
-  const button = $("noticeForm").querySelector('button[type="submit"]');
-  button.disabled = true;
+$('reportForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  if (!sb || !user || !profile) return msg('reportStatus', 'Sign in and make sure your profile has loaded first.', 'error');
+  if (profile.role !== 'student') return msg('reportStatus', 'Only student accounts can submit reports.', 'error');
+  const item_name = $('itemName').value.trim(), description = $('description').value.trim();
+  if (!item_name || !description) return msg('reportStatus', 'Item name and description are required.', 'error');
+  const payload = { student_id: user.id, report_type: $('reportType').value, item_name, description, location: $('location').value.trim() || null, incident_date: $('incidentDate').value || null, status: 'pending' };
+  const button = e.submitter; if (button) button.disabled = true;
   try {
-    const {error} = await sb.from("public_notices").insert({
-      title, content, published, created_by:currentUser.id
-    });
-    if (error) throw error;
-    $("noticeForm").reset();
-    message("noticeFormMessage","Notice saved.","success");
-    await loadNotices();
-  } catch (err) {
-    message("noticeFormMessage",err.message || "Could not save notice.","error");
-  } finally {
-    button.disabled = false;
-  }
+    const { error } = await sb.from('lost_found_reports').insert(payload);
+    if (error) return msg('reportStatus', 'Could not submit report: ' + error.message, 'error');
+    e.target.reset(); msg('reportStatus', 'Report submitted for staff review.', 'ok'); await loadMine();
+  } catch (err) { msg('reportStatus', err.message || 'Report submission failed.', 'error'); }
+  finally { if (button) button.disabled = false; }
 });
-
-$("refreshReports").addEventListener("click",loadMyReports);
-$("refreshStaff").addEventListener("click",loadStaffReports);
-
-function setDefaultDate() {
-  const now = new Date();
-  $("itemDate").value = new Date(now.getTime() - now.getTimezoneOffset()*60000).toISOString().slice(0,10);
+async function loadMine() {
+  if (!sb || !user) { $('myReports').textContent = 'Sign in to see your reports.'; return; }
+  const { data, error } = await sb.from('lost_found_reports').select('id,item_name,report_type,status,created_at').eq('student_id', user.id).order('created_at', { ascending: false });
+  if (error) { $('myReports').textContent = 'Could not load reports: ' + error.message; return; }
+  $('myReports').innerHTML = data?.length ? data.map(r => `<div class="notice"><div class="row"><h3>${esc(r.item_name)}</h3><span class="pill">${esc(r.status)}</span></div><p class="muted small">${esc(r.report_type)} · ${esc(prettyDate(r.created_at))}</p></div>`).join('') : 'No reports yet.';
 }
-
-async function start() {
-  setDefaultDate();
-
-  if (!window.supabase?.createClient) {
-    message("reportTopMessage","Could not load the Supabase library. Check your internet connection and reload.","error");
-    $("homeNotices").innerHTML = '<div class="empty">Supabase library failed to load.</div>';
-    return;
-  }
-  if (!SUPABASE_PUBLISHABLE_KEY || SUPABASE_PUBLISHABLE_KEY === "PASTE_YOUR_SUPABASE_PUBLISHABLE_KEY_HERE") {
-    message("reportTopMessage","Add your Supabase publishable key in the SUPABASE_PUBLISHABLE_KEY setting near the top of the script.","error");
-    $("homeNotices").innerHTML = '<div class="empty">Add your Supabase publishable key to load notices.</div>';
-    return;
-  }
-
-  try {
-    sb = window.supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY);
-    sb.auth.onAuthStateChange((event,session) => {
-      // Defer profile queries to avoid performing Supabase calls inside this callback.
-      if (event === "SIGNED_OUT") {
-        currentUser = null;
-        currentProfile = null;
-        updateAccountUI();
-      } else if (event === "SIGNED_IN" && session?.user) {
-        setTimeout(async () => {
-          try {
-            await refreshAccount();
-            await loadNotices();
-          } catch (err) {
-            console.error("Account refresh:",err);
-          }
-        },0);
-      }
-    });
-
-    await refreshAccount();
-    await loadNotices();
-    if (currentUser && currentProfile?.role === "teacher_admin") {
-      await loadStaffReports();
+async function loadNotices() {
+  if (!sb) { $('publicNotices').innerHTML = '<p class="muted">Connect Supabase to load approved notices.</p>'; return; }
+  // Matches the public_notices schema: title, content, published, created_by, created_at.
+  const { data, error } = await sb.from('public_notices').select('id,title,content,created_at').eq('published', true).order('created_at', { ascending: false }).limit(100);
+  if (error) { $('publicNotices').textContent = 'Could not load notices: ' + error.message; return; }
+  $('publicNotices').innerHTML = data?.length ? data.map(n => `<article class="notice"><h3>${esc(n.title)}</h3><p>${esc(n.content).replace(/\n/g, '<br>')}</p><p class="muted small">Published ${esc(prettyDate(n.created_at))}</p></article>`).join('') : 'No published notices right now.';
+}
+async function loadAdmin() {
+  if (!sb || profile?.role !== 'teacher_admin') return;
+  const { data, error } = await sb.from('lost_found_reports').select('id,student_id,report_type,item_name,description,location,incident_date,status,created_at').in('status', ['pending','approved']).order('created_at', { ascending: false }).limit(100);
+  if (error) { msg('adminStatus', 'Could not load reports: ' + error.message, 'error'); return; }
+  $('adminReports').innerHTML = data?.length ? data.map(r => `<article class="notice"><div class="row"><h3>${esc(r.item_name)} <span class="pill">${esc(r.status)}</span></h3><span>${esc(r.report_type)}</span></div><p>${esc(r.description)}</p><p class="muted small">Location: ${esc(r.location || 'Not given')} · ${esc(r.incident_date || 'Date not given')} · Submitted ${esc(prettyDate(r.created_at))}</p><div class="actions">${r.status === 'pending' ? `<button data-action="approve" data-id="${esc(r.id)}">Approve & publish notice</button><button class="danger" data-action="reject" data-id="${esc(r.id)}">Reject</button>` : `<button class="secondary" data-action="returned" data-id="${esc(r.id)}">Mark returned</button>`}</div></article>`).join('') : 'No reports to review.';
+  $('adminReports').querySelectorAll('button[data-action]').forEach(b => b.addEventListener('click', () => moderate(b.dataset.id, b.dataset.action)));
+}
+async function moderate(id, action) {
+  if (!sb || profile?.role !== 'teacher_admin') return msg('adminStatus', 'Staff access required.', 'error');
+  const { data: report, error: readError } = await sb.from('lost_found_reports').select('id,report_type,item_name,description,location,incident_date,status').eq('id', id).single();
+  if (readError) return msg('adminStatus', readError.message, 'error');
+  if (action === 'approve' && report.status !== 'pending') return msg('adminStatus', 'This report has already been reviewed. Refresh the queue.', 'error');
+  const status = action === 'approve' ? 'approved' : action === 'reject' ? 'rejected' : 'returned';
+  const { error: updateError } = await sb.from('lost_found_reports').update({ status }).eq('id', id);
+  if (updateError) return msg('adminStatus', 'Could not update report: ' + updateError.message, 'error');
+  if (action === 'approve') {
+    // Public notices schema has title/content/published; don't assume a report_id column exists.
+    const title = `${report.report_type === 'lost' ? 'Lost item' : 'Found item'}: ${report.item_name}`;
+    const content = `${report.description}${report.location ? '\nLocation: ' + report.location : ''}${report.incident_date ? '\nDate: ' + report.incident_date : ''}`;
+    const { error: publishError } = await sb.from('public_notices').insert({ title, content, published: true, created_by: user.id });
+    if (publishError) {
+      // Try to roll the report back so staff can safely retry after fixing the notice policy/schema.
+      await sb.from('lost_found_reports').update({ status: 'pending' }).eq('id', id);
+      return msg('adminStatus', 'Notice could not be published, so the report was returned to pending. Check public_notices INSERT policy: ' + publishError.message, 'error');
     }
-  } catch (err) {
-    console.error(err);
-    message("reportTopMessage",err.message || "Could not initialize Supabase.","error");
   }
+  msg('adminStatus', action === 'approve' ? 'Report approved and notice published.' : action === 'reject' ? 'Report rejected.' : 'Report marked returned. Existing published notices are not automatically removed; manage them in Supabase.', 'ok');
+  await Promise.all([loadAdmin(), loadNotices(), loadMine()]);
 }
-
-start();
-</script>
-</body>
-</html>
+$('refreshMine').addEventListener('click', loadMine);
+$('refreshAdmin').addEventListener('click', loadAdmin);
+$('copyAssembly').addEventListener('click', async () => {
+  if (!sb || profile?.role !== 'teacher_admin') return msg('adminStatus', 'Staff access required.', 'error');
+  const { data, error } = await sb.from('public_notices').select('title,content').eq('published', true).order('created_at', { ascending: false }).limit(20);
+  if (error) return msg('adminStatus', error.message, 'error');
+  const lines = (data || []).map(n => `${n.title}. ${n.content}`);
+  $('assemblyText').value = lines.length ? 'Good morning. Please note the following school announcements.\n\n' + lines.join('\n\n') + '\n\nIf you recognise an item, please contact the authorized school office/teacher. Thank you.' : 'There are no current published announcements.';
+});
+// No credentials are saved by this page. Supabase handles session storage after you connect.
+</script></body></html>
