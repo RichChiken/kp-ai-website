@@ -3,704 +3,652 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#080d1b">
-<title>KPS Portal — School Hub</title>
-
+<title>KPS Portal | School Hub</title>
 <style>
-:root {
-  --bg: #080d1b;
-  --panel: #111a2d;
-  --panel2: #17233a;
-  --text: #f2f5ff;
-  --muted: #9baac4;
-  --blue: #6c8cff;
-  --cyan: #59e1ed;
-  --border: rgba(255,255,255,.09);
-  --radius: 20px;
-}
-* { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
-body {
-  margin: 0;
-  font-family: Inter, ui-sans-serif, system-ui, -apple-system, sans-serif;
-  background:
-    radial-gradient(ellipse at 80% 0%, rgba(65,91,190,.15), transparent 38%),
-    var(--bg);
-  color: var(--text);
-  min-height: 100vh;
-}
-button, input, select, textarea { font: inherit; }
-button { cursor: pointer; }
-button:focus-visible, input:focus-visible, select:focus-visible,
-textarea:focus-visible, a:focus-visible {
-  outline: 2px solid var(--cyan);
-  outline-offset: 3px;
-}
-button:disabled { opacity: .5; cursor: not-allowed; }
-a { color: inherit; text-decoration: none; }
-.hidden { display: none !important; }
-.muted { color: var(--muted); }
-.small { font-size: 12px; }
-.eyebrow {
-  color: var(--cyan);
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-}
-h1, h2, h3, p { margin-top: 0; }
-h1 { font-size: clamp(28px, 4vw, 42px); letter-spacing: -1.5px; }
-h2 { letter-spacing: -.5px; }
-button, .btn { transition: transform .2s, background .2s, border-color .2s; }
-button:hover:not(:disabled), .btn:hover { transform: translateY(-2px); }
-.primary {
-  background: linear-gradient(120deg, #6587ff, #8469ef);
-  border: 0; color: white; font-weight: 750;
-  border-radius: 12px; padding: 12px 17px;
-}
-.secondary {
-  background: rgba(255,255,255,.045);
-  color: var(--text); border: 1px solid var(--border);
-  border-radius: 12px; padding: 11px 15px;
-}
-.danger { color: #ff9aab; }
-.topbar {
-  position: sticky; top: 0; z-index: 20;
-  background: rgba(8,13,27,.84);
-  backdrop-filter: blur(18px);
-  border-bottom: 1px solid var(--border);
-}
-.top-inner {
-  max-width: 1400px; margin: auto; padding: 14px 24px;
-  display: flex; align-items: center; justify-content: space-between; gap: 16px;
-}
-.brand { display:flex; align-items:center; gap: 11px; font-weight: 850; }
-.brand-icon {
-  width: 43px; height: 43px; border-radius: 14px;
-  display:grid; place-items:center;
-  background: linear-gradient(135deg,#6587ff,#6f56cf);
-  box-shadow: 0 6px 25px #617bff35; font-size: 19px;
-}
-.brand small { display:block; color:var(--muted); font-size:10px; font-weight:600; margin-top:3px; }
-.top-actions { display:flex; gap:9px; align-items:center; }
-.layout {
-  max-width: 1400px; margin:auto; padding: 24px;
-  display:grid; grid-template-columns: 235px minmax(0,1fr); gap:24px;
-}
-.sidebar {
-  background: rgba(17,26,45,.8); border:1px solid var(--border);
-  border-radius:var(--radius); padding:17px; height:fit-content;
-  position:sticky; top:88px;
-}
-.nav-label { color:#71829f; font-size:10px; letter-spacing:1.5px; font-weight:800; margin:16px 10px 9px; }
-.nav-btn {
-  display:flex; align-items:center; gap:12px; width:100%;
-  padding:12px; border:1px solid transparent; border-radius:12px;
-  color:var(--muted); background:transparent; text-align:left; margin:3px 0;
-}
-.nav-btn .ico { width:23px; text-align:center; font-size:17px; }
-.nav-btn.active, .nav-btn:hover {
-  color:white; background:linear-gradient(100deg,#6587ff22,#8067ee10);
-  border-color:#718cff30;
-}
-.content { min-width:0; }
-.page { animation:fadeUp .35s ease both; }
-@keyframes fadeUp { from {opacity:0;transform:translateY(8px)} to {opacity:1;transform:translateY(0)} }
-.hero {
-  border:1px solid #7e8dff35; border-radius:26px; padding:32px;
-  background:
-    radial-gradient(circle at 85% 20%,#7a69f52b,transparent 32%),
-    linear-gradient(120deg,#19294a,#111a30 70%);
-  position:relative; overflow:hidden;
-}
-.hero:after {
-  content:"✦"; position:absolute; right:9%; top:15%;
-  font-size:100px; color:#91aaff13; animation:float 5s ease-in-out infinite;
-}
-@keyframes float { 50% { transform:translateY(-10px) rotate(10deg) } }
-.hero p { color:#b6c5df; max-width:550px; line-height:1.7; }
-.hero-actions { display:flex; flex-wrap:wrap; gap:10px; margin-top:22px; }
-.grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:15px; margin:20px 0; }
-.card {
-  border:1px solid var(--border); border-radius:var(--radius);
-  background:linear-gradient(145deg,rgba(20,31,52,.95),rgba(15,23,40,.95));
-  padding:20px; min-width:0;
-}
-.card h3 { margin-bottom:8px; font-size:16px; }
-.stat { font-size:28px; font-weight:850; margin:12px 0 5px; }
-.stat-icon {
-  width:43px; height:43px; border-radius:14px; display:grid; place-items:center;
-  background:#718cff1b; font-size:21px; margin-bottom:18px;
-}
-.section-head { display:flex; align-items:center; justify-content:space-between; gap:12px; margin:27px 0 14px; }
-.section-head h2 { margin:0; font-size:21px; }
-.list { display:grid; gap:10px; }
-.list-item {
-  display:flex; gap:13px; align-items:flex-start;
-  border:1px solid var(--border); border-radius:15px;
-  padding:15px; background:#ffffff04;
-}
-.list-icon { flex-shrink:0; width:39px; height:39px; display:grid; place-items:center; border-radius:12px; background:#6e89ff18; }
-.list-item h3 { margin:2px 0 6px; font-size:14px; }
-.list-item p { margin:0; font-size:13px; color:var(--muted); line-height:1.55; overflow-wrap:anywhere; }
-.tag { display:inline-block; border-radius:30px; padding:5px 9px; background:#718cff20; color:#b6c5ff; font-size:10px; font-weight:800; }
-.empty { text-align:center; padding:30px 15px; border:1px dashed #34425e; border-radius:15px; color:var(--muted); }
-.form-grid { display:grid; grid-template-columns:1fr 1fr; gap:15px; }
-.field { display:grid; gap:7px; min-width:0; }
-.field.full { grid-column:1/-1; }
-.field label { font-size:12px; color:#c5d0e5; font-weight:700; }
-.field input, .field select, .field textarea {
-  width:100%; min-width:0; border:1px solid #34425b; background:#0b1324;
-  color:var(--text); padding:12px 13px; border-radius:11px;
-}
-.field textarea { min-height:105px; resize:vertical; }
-.field input::placeholder, .field textarea::placeholder { color:#667894; }
-.form-actions { display:flex; flex-wrap:wrap; gap:10px; margin-top:17px; }
-.notice {
-  padding:12px 14px; border-radius:12px; font-size:13px;
-  background:#6e89ff15; border:1px solid #6e89ff35; color:#cbd7ff;
-  margin:14px 0; line-height:1.5;
-}
-.notice.error { background:#ff657415; border-color:#ff65743d; color:#ffb8c3; }
-.notice.success { background:#42d7a115; border-color:#42d7a13d; color:#9bf0ce; }
-.auth-wrap { max-width:760px; margin:24px auto; }
-.auth-switch { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:18px; }
-.auth-choice { padding:17px; border:1px solid var(--border); border-radius:15px; background:#101a2e; text-align:left; color:var(--text); }
-.auth-choice.selected { border-color:#7c92ff; background:#6e89ff17; }
-.auth-choice strong { display:block; margin:8px 0 5px; }
-.auth-choice span { color:var(--muted); font-size:12px; line-height:1.5; }
-.auth-card { max-width:540px; margin:auto; }
-.auth-card .field { margin-bottom:15px; }
-.auth-card .primary { width:100%; }
-.tabs { display:flex; gap:7px; margin-bottom:20px; }
-.tab { border:1px solid var(--border); border-radius:10px; background:transparent; color:var(--muted); padding:9px 14px; }
-.tab.active { background:#6c8cff22; color:white; border-color:#6c8cff55; }
-.table-wrap { overflow-x:auto; }
-table { border-collapse:collapse; width:100%; min-width:500px; font-size:13px; }
-th,td { padding:13px 12px; text-align:left; border-bottom:1px solid var(--border); }
-th { color:var(--muted); font-size:11px; }
-footer { max-width:1400px; margin:auto; padding:12px 24px 30px; color:#71809a; font-size:11px; text-align:center; }
-.mobile-nav { display:none; }
-.toast {
-  position:fixed; bottom:22px; right:22px; z-index:99; max-width:min(380px,calc(100vw - 44px));
-  padding:14px 18px; border-radius:13px; background:#202d46; border:1px solid #445778;
-  box-shadow:0 10px 35px #0005; animation:fadeUp .2s ease;
-}
-@media(max-width:950px) {
-  .layout { grid-template-columns:1fr; padding:16px; }
-  .sidebar { display:none; }
-  .mobile-nav {
-    display:flex; gap:7px; overflow-x:auto; padding-bottom:5px; margin-bottom:18px;
-  }
-  .mobile-nav .nav-btn { flex-shrink:0; width:auto; white-space:nowrap; padding:10px; }
-  .grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
-}
-@media(max-width:580px) {
-  .top-inner { padding:11px 14px; }
-  .top-actions .secondary { padding:9px; }
-  .layout { padding:12px; }
-  .hero { padding:23px; }
-  .grid { grid-template-columns:1fr; }
-  .form-grid { grid-template-columns:1fr; }
-  .field.full { grid-column:auto; }
-  .section-head { align-items:flex-start; }
-  .brand small { display:none; }
-  .auth-switch { grid-template-columns:1fr; }
-}
-@media(prefers-reduced-motion:reduce) {
-  *,*::before,*::after { animation-duration:.01ms !important; animation-iteration-count:1 !important; scroll-behavior:auto !important; transition-duration:.01ms !important; }
-}
+:root{--bg:#080d1b;--panel:#111a2d;--panel2:#17233a;--text:#f2f5ff;--muted:#9baac4;--blue:#6c8cff;--cyan:#59e1ed;--border:#ffffff13;--red:#ff8295;--green:#6ce0ad}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(ellipse at 80% 0%,#405bbd20,transparent 40%),var(--bg);color:var(--text);font:15px system-ui,-apple-system,sans-serif}
+button,input,select,textarea{font:inherit}button{cursor:pointer}button:disabled{opacity:.5;cursor:not-allowed}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
+button:hover:not(:disabled){filter:brightness(1.1);transform:translateY(-1px)}
+a{color:#a9bbff}h1{font-size:clamp(28px,4vw,42px);letter-spacing:-1.5px;margin:8px 0 12px}h2{font-size:22px}h3{font-size:16px}p{line-height:1.65}.muted{color:var(--muted)}.small{font-size:12px}.hidden{display:none!important}
+.topbar{position:sticky;top:0;z-index:5;background:#080d1beF;backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+.topinner{max-width:1400px;margin:auto;padding:13px 22px;display:flex;align-items:center;justify-content:space-between;gap:14px}
+.brand{display:flex;gap:11px;align-items:center;font-weight:850;letter-spacing:.5px}.logo{width:43px;height:43px;border-radius:14px;background:linear-gradient(135deg,#6587ff,#8469ef);display:grid;place-items:center;font-size:21px}.brand small{display:block;color:var(--muted);font-size:10px;letter-spacing:1px}
+button{transition:.2s}.primary{background:linear-gradient(120deg,#6587ff,#8469ef);border:0;color:white;padding:11px 16px;border-radius:11px;font-weight:750}.secondary{background:#ffffff08;border:1px solid var(--border);color:var(--text);padding:10px 14px;border-radius:11px}.dangerbtn{background:#ff657418;color:#ffacb7;border:1px solid #ff65744a;padding:8px 11px;border-radius:9px}
+.layout{max-width:1400px;margin:auto;padding:22px;display:grid;grid-template-columns:225px minmax(0,1fr);gap:22px}
+.sidebar{height:fit-content;position:sticky;top:82px;background:#111a2ddd;border:1px solid var(--border);padding:15px;border-radius:19px}
+.navlabel{color:#71829f;font-size:10px;letter-spacing:1.5px;font-weight:800;margin:16px 9px 8px}
+.navbtn{display:block;width:100%;text-align:left;border:1px solid transparent;background:transparent;color:var(--muted);padding:12px;border-radius:11px;margin:3px 0}
+.navbtn.active,.navbtn:hover{background:#718cff18;color:white;border-color:#718cff35}
+.mobile-nav{display:none}.content{min-width:0}.page{animation:appear .25s ease}@keyframes appear{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.hero{padding:30px;border:1px solid #7e8dff35;border-radius:24px;background:radial-gradient(circle at 90% 20%,#7a69f52b,transparent 35%),linear-gradient(120deg,#19294a,#111a30)}
+.hero p{max-width:590px;color:#b6c5df}.eyebrow{color:var(--cyan);font-size:11px;font-weight:800;letter-spacing:2px}.actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:18px}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:19px 0}
+.card{min-width:0;background:linear-gradient(145deg,#141f34,#0f1728);border:1px solid var(--border);border-radius:18px;padding:20px}
+.staticon{font-size:23px;margin-bottom:14px}.stat{font-size:25px;font-weight:850;margin:8px 0}
+.sectionhead{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:25px 0 13px}.sectionhead h2{margin:0}
+.list{display:grid;gap:10px}.item{display:flex;gap:13px;padding:15px;border:1px solid var(--border);border-radius:14px;background:#ffffff04;min-width:0}.itemicon{width:39px;height:39px;display:grid;place-items:center;background:#718cff18;border-radius:12px;flex-shrink:0}.item h3{margin:1px 0 6px}.item p{margin:0;color:var(--muted);font-size:13px;overflow-wrap:anywhere}
+.tag{display:inline-block;font-size:10px;padding:4px 8px;border-radius:20px;background:#718cff20;color:#c3ceff;font-weight:800}
+.field{display:grid;gap:7px;margin-bottom:14px;min-width:0}.field label{font-size:12px;font-weight:700;color:#c5d0e5}
+.field input,.field select,.field textarea{width:100%;min-width:0;border:1px solid #34425b;background:#0b1324;color:var(--text);padding:12px;border-radius:10px}
+.field textarea{min-height:100px;resize:vertical}.field input::placeholder,.field textarea::placeholder{color:#71809a}
+.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:0 14px}.full{grid-column:1/-1}
+.notice{padding:12px 14px;border-radius:11px;background:#6e89ff15;border:1px solid #6e89ff35;color:#cbd7ff;font-size:13px;line-height:1.55;margin:13px 0}
+.notice.error{background:#ff657415;border-color:#ff65743a;color:#ffbac4}.notice.success{background:#42d7a115;border-color:#42d7a13a;color:#9bf0ce}
+.authwrap{max-width:720px;margin:10px auto}.authswitch{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:20px 0}
+.authchoice{background:#111a2d;border:1px solid var(--border);border-radius:14px;padding:16px;color:var(--text);text-align:left}.authchoice.selected{border-color:#7c92ff;background:#6e89ff17}.authchoice strong{display:block;margin:7px 0}.authchoice span{color:var(--muted);font-size:12px}
+.tabs{display:flex;gap:7px;margin-bottom:18px}.tab{border:1px solid var(--border);background:transparent;color:var(--muted);border-radius:9px;padding:9px 13px}.tab.active{background:#6c8cff22;color:white;border-color:#6c8cff55}
+.empty{padding:25px;text-align:center;color:var(--muted);border:1px dashed #34425e;border-radius:14px}
+.tablewrap{overflow:auto}table{width:100%;min-width:610px;border-collapse:collapse;font-size:13px}th,td{padding:12px;text-align:left;border-bottom:1px solid var(--border);vertical-align:top}th{color:var(--muted);font-size:11px}
+footer{text-align:center;padding:10px 20px 30px;color:#71809a;font-size:11px}
+.toast{position:fixed;z-index:10;bottom:20px;right:20px;max-width:calc(100vw - 40px);background:#202d46;border:1px solid #445778;border-radius:12px;padding:14px 18px;box-shadow:0 10px 35px #0005}
+@media(max-width:900px){.layout{grid-template-columns:1fr;padding:15px}.sidebar{display:none}.mobile-nav{display:flex;gap:5px;overflow:auto;margin-bottom:17px}.mobile-nav .navbtn{white-space:nowrap;width:auto;flex-shrink:0}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:580px){.topinner{padding:11px 13px}.layout{padding:12px}.hero{padding:22px}.grid{grid-template-columns:1fr}.formgrid{grid-template-columns:1fr}.full{grid-column:auto}.authswitch{grid-template-columns:1fr}.brand small{display:none}.topinner .small{display:none}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
 </style>
 </head>
-
 <body>
 <header class="topbar">
-  <div class="top-inner">
-    <a class="brand" href="#" data-page="home" aria-label="KPS Portal home">
-      <div class="brand-icon">K</div>
-      <div>KPS PORTAL<small>SCHOOL HUB</small></div>
-    </a>
-    <div class="top-actions">
-      <span class="muted small" id="headerStatus">Guest access</span>
-      <button class="secondary" id="headerLogin">Sign in</button>
-    </div>
+  <div class="topinner">
+    <a class="brand" href="#" id="homeBrand"><span class="logo">K</span><span>KPS PORTAL<small>SCHOOL HUB</small></span></a>
+    <div style="display:flex;align-items:center;gap:10px"><span id="headerStatus" class="muted small">Not signed in</span><button class="secondary" id="headerAuth">Sign in</button><button class="secondary hidden" id="signOut">Sign out</button></div>
   </div>
 </header>
 
 <div class="layout">
-  <aside class="sidebar" aria-label="Main navigation">
-    <div class="nav-label">WORKSPACE</div>
-    <button class="nav-btn active" data-page="home"><span class="ico">⌂</span> Overview</button>
-    <button class="nav-btn" data-page="notices"><span class="ico">▤</span> Notice Board</button>
-    <button class="nav-btn" data-page="lostfound"><span class="ico">⌕</span> Lost & Found</button>
-    <button class="nav-btn" data-page="ai"><span class="ico">✧</span> K.P AI</button>
-    <div class="nav-label">ACCOUNT</div>
-    <button class="nav-btn" data-page="auth"><span class="ico">↗</span> Student Sign In</button>
-    <button class="nav-btn" data-page="staffAuth"><span class="ico">▣</span> Staff Sign In</button>
-    <div class="notice small">🔒 Account access will be secured through Supabase in the backend setup.</div>
+  <aside class="sidebar">
+    <div class="navlabel">WORKSPACE</div>
+    <button class="navbtn active" data-page="home">⌂ &nbsp; Overview</button>
+    <button class="navbtn" data-page="notices">▤ &nbsp; Notice Board</button>
+    <button class="navbtn" data-page="lostfound">⌕ &nbsp; Lost & Found</button>
+    <button class="navbtn" data-page="ai">✧ &nbsp; K.P AI</button>
+    <div class="navlabel">ACCOUNT</div>
+    <button class="navbtn" data-page="studentAuth">🎓 &nbsp; Student Sign In</button>
+    <button class="navbtn" data-page="staffAuth">🛡️ &nbsp; Staff Sign In</button>
+    <button class="navbtn hidden" id="staffNav" data-page="staff">▣ &nbsp; Staff Dashboard</button>
+    <div class="notice small">Your access and report permissions are enforced by Supabase.</div>
   </aside>
 
   <main class="content">
-    <nav class="mobile-nav" aria-label="Mobile navigation">
-      <button class="nav-btn active" data-page="home">⌂ Home</button>
-      <button class="nav-btn" data-page="notices">▤ Notices</button>
-      <button class="nav-btn" data-page="lostfound">⌕ Lost & Found</button>
-      <button class="nav-btn" data-page="ai">✧ K.P AI</button>
-      <button class="nav-btn" data-page="auth">Student</button>
-      <button class="nav-btn" data-page="staffAuth">Staff</button>
+    <nav class="mobile-nav">
+      <button class="navbtn active" data-page="home">⌂ Home</button>
+      <button class="navbtn" data-page="notices">Notices</button>
+      <button class="navbtn" data-page="lostfound">Lost & Found</button>
+      <button class="navbtn" data-page="ai">K.P AI</button>
+      <button class="navbtn" data-page="studentAuth">Student</button>
+      <button class="navbtn" data-page="staffAuth">Staff</button>
+      <button class="navbtn hidden" id="staffMobileNav" data-page="staff">Staff dashboard</button>
     </nav>
 
     <section class="page" id="page-home">
       <div class="hero">
         <div class="eyebrow">YOUR SCHOOL, ONE PLACE</div>
         <h1>Welcome to KPS Portal<span style="color:var(--cyan)">.</span></h1>
-        <p>A smarter place to stay updated, report lost belongings, discover school announcements, and access K.P AI.</p>
-        <div class="hero-actions">
-          <button class="primary" data-page="auth">Student sign in ↗</button>
-          <button class="secondary" data-page="lostfound">Report an item</button>
-        </div>
+        <p>School notices, Lost & Found, and K.P AI — organized into one school hub.</p>
+        <div class="actions"><button class="primary" data-page="studentAuth">Student sign in ↗</button><button class="secondary" data-page="lostfound">Lost & Found</button></div>
       </div>
-
       <div class="grid">
-        <div class="card">
-          <div class="stat-icon">▤</div>
-          <div class="muted small">SCHOOL UPDATES</div>
-          <div class="stat">Notices</div>
-          <p class="muted small">Keep up with school announcements.</p>
-          <button class="secondary" data-page="notices">View notices →</button>
-        </div>
-        <div class="card">
-          <div class="stat-icon">⌕</div>
-          <div class="muted small">LOST SOMETHING?</div>
-          <div class="stat">Lost & Found</div>
-          <p class="muted small">Report missing or found belongings.</p>
-          <button class="secondary" data-page="lostfound">Open reports →</button>
-        </div>
-        <div class="card">
-          <div class="stat-icon">✧</div>
-          <div class="muted small">YOUR AI ASSISTANT</div>
-          <div class="stat">K.P AI</div>
-          <p class="muted small">A school assistant experience, coming soon.</p>
-          <button class="secondary" data-page="ai">Explore K.P AI →</button>
-        </div>
+        <div class="card"><div class="staticon">▤</div><div class="muted small">SCHOOL UPDATES</div><div class="stat">Notices</div><p class="muted small">Read official school announcements.</p><button class="secondary" data-page="notices">View notices →</button></div>
+        <div class="card"><div class="staticon">⌕</div><div class="muted small">LOST SOMETHING?</div><div class="stat">Lost & Found</div><p class="muted small">Submit a report with your account.</p><button class="secondary" data-page="lostfound">Open reports →</button></div>
+        <div class="card"><div class="staticon">✧</div><div class="muted small">SCHOOL ASSISTANT</div><div class="stat">K.P AI</div><p class="muted small">AI assistant integration comes later.</p><button class="secondary" data-page="ai">Explore →</button></div>
       </div>
-
-      <div class="section-head">
-        <h2>Latest announcements</h2>
-        <button class="secondary" data-page="notices">View all</button>
-      </div>
-      <div class="list" id="homeNotices"></div>
+      <div class="sectionhead"><h2>Latest announcements</h2><button class="secondary" data-page="notices">View all</button></div>
+      <div class="list" id="homeNotices"><div class="empty">Loading notices…</div></div>
     </section>
 
     <section class="page hidden" id="page-notices">
-      <div class="eyebrow">STAY INFORMED</div>
-      <h1>Notice Board</h1>
-      <p class="muted">School updates and important announcements in one place.</p>
-      <div class="notice">This is a frontend preview. Official notices will load from the database after backend integration.</div>
-      <div class="list" id="noticeList"></div>
+      <div class="eyebrow">STAY INFORMED</div><h1>Notice Board</h1><p class="muted">Official published announcements.</p>
+      <div id="noticeMessage" aria-live="polite"></div>
+      <div class="list" id="noticeList"><div class="empty">Loading notices…</div></div>
+      <div class="card hidden" id="noticeEditor" style="margin-top:18px">
+        <h2>Publish a notice</h2>
+        <form id="noticeForm">
+          <div class="field"><label for="noticeTitle">Title</label><input id="noticeTitle" maxlength="150" required></div>
+          <div class="field"><label for="noticeContent">Announcement</label><textarea id="noticeContent" maxlength="3000" required></textarea></div>
+          <label class="small"><input type="checkbox" id="noticePublish"> Publish immediately</label>
+          <div class="actions"><button class="primary" type="submit">Save notice</button></div>
+          <div id="noticeFormMessage" aria-live="polite"></div>
+        </form>
+      </div>
     </section>
 
     <section class="page hidden" id="page-lostfound">
-      <div class="eyebrow">FIND WHAT MATTERS</div>
-      <h1>Lost & Found</h1>
-      <p class="muted">Report a lost item or help return something you found.</p>
-      <div class="notice">Demo mode: reports are kept only in this browser session and are not sent to school staff.</div>
-
+      <div class="eyebrow">FIND WHAT MATTERS</div><h1>Lost & Found</h1>
+      <p class="muted">Submit a report or check the reports you have submitted.</p>
+      <div id="reportTopMessage" aria-live="polite"></div>
       <div class="card">
         <h2>Submit a report</h2>
+        <p class="muted small">Sign in with your student account first. Reports are private to you and authorized staff.</p>
         <form id="reportForm">
-          <div class="form-grid">
-            <div class="field">
-              <label for="reportType">Report type</label>
-              <select id="reportType" required>
-                <option value="Lost">I lost an item</option>
-                <option value="Found">I found an item</option>
-              </select>
-            </div>
-            <div class="field">
-              <label for="itemName">Item name</label>
-              <input id="itemName" maxlength="80" required placeholder="e.g. Blue water bottle">
-            </div>
-            <div class="field">
-              <label for="itemLocation">Where?</label>
-              <input id="itemLocation" maxlength="100" required placeholder="e.g. Library">
-            </div>
-            <div class="field">
-              <label for="itemDate">Date</label>
-              <input id="itemDate" type="date" required>
-            </div>
-            <div class="field full">
-              <label for="itemDescription">Description</label>
-              <textarea id="itemDescription" maxlength="600" required placeholder="Describe the item and any details that help identify it."></textarea>
-            </div>
+          <div class="formgrid">
+            <div class="field"><label for="reportType">Report type</label><select id="reportType" required><option value="lost">I lost an item</option><option value="found">I found an item</option></select></div>
+            <div class="field"><label for="itemName">Item name</label><input id="itemName" maxlength="80" required placeholder="Blue water bottle"></div>
+            <div class="field"><label for="itemLocation">Location</label><input id="itemLocation" maxlength="100" required placeholder="School library"></div>
+            <div class="field"><label for="itemDate">Date</label><input id="itemDate" type="date" required></div>
+            <div class="field full"><label for="itemDescription">Description</label><textarea id="itemDescription" maxlength="600" required placeholder="Describe the item and identifying details"></textarea></div>
           </div>
-          <div class="form-actions">
-            <button class="primary" type="submit">Submit demo report</button>
-            <button class="secondary" type="reset">Clear form</button>
-          </div>
+          <div class="actions"><button class="primary" id="reportSubmit" type="submit">Submit report</button><button class="secondary" type="reset">Clear</button></div>
           <div id="reportMessage" aria-live="polite"></div>
         </form>
       </div>
-
-      <div class="section-head"><h2>Recent demo reports</h2></div>
-      <div class="list" id="reportList"></div>
+      <div class="sectionhead"><h2>My reports</h2><button class="secondary" id="refreshReports">Refresh</button></div>
+      <div class="list" id="reportList"><div class="empty">Sign in to load your reports.</div></div>
     </section>
 
     <section class="page hidden" id="page-ai">
-      <div class="eyebrow">YOUR SCHOOL ASSISTANT</div>
-      <h1>Meet K.P AI<span style="color:var(--cyan)">.</span></h1>
-      <p class="muted">A dedicated assistant designed to help with school-related questions.</p>
-      <div class="card">
-        <div class="stat-icon">✧</div>
-        <h2>Something useful is on the way.</h2>
-        <p class="muted" style="line-height:1.8">K.P AI will have its own assistant interface once we connect its functionality. For now, this is the frontend placeholder — no fake AI responses.</p>
-        <button class="secondary" data-page="home">Back to overview</button>
-      </div>
+      <div class="eyebrow">YOUR SCHOOL ASSISTANT</div><h1>K.P AI<span style="color:var(--cyan)">.</span></h1>
+      <div class="card"><div class="staticon">✧</div><h2>AI assistant integration is next</h2><p class="muted">The portal UI is ready for the K.P AI feature. We will connect its actual AI functionality separately.</p></div>
     </section>
 
-    <section class="page hidden" id="page-auth">
-      <div class="auth-wrap">
-        <div class="eyebrow">STUDENT ACCESS</div>
-        <h1>Student sign in</h1>
-        <p class="muted">Access the student portal using your student account.</p>
-
-        <div class="auth-switch">
-          <button class="auth-choice selected" data-auth="student">
-            <div style="font-size:23px">🎓</div>
-            <strong>Student portal</strong>
-            <span>Student accounts and school resources.</span>
-          </button>
-          <button class="auth-choice" data-auth="staff">
-            <div style="font-size:23px">🛡️</div>
-            <strong>Staff portal</strong>
-            <span>Separate sign-in for authorized school staff.</span>
-          </button>
+    <section class="page hidden" id="page-studentAuth">
+      <div class="authwrap">
+        <div class="eyebrow">STUDENT ACCESS</div><h1>Student portal</h1><p class="muted">Sign in or create your student account.</p>
+        <div class="authswitch">
+          <button class="authchoice selected" data-authchoice="student"><div>🎓</div><strong>Student sign in</strong><span>Student resources and Lost & Found.</span></button>
+          <button class="authchoice" data-authchoice="staff"><div>🛡️</div><strong>Staff sign in</strong><span>Authorized school personnel only.</span></button>
         </div>
-
-        <div class="card auth-card">
-          <div class="tabs">
-            <button class="tab active" data-mode="login">Sign in</button>
-            <button class="tab" data-mode="signup">Create account</button>
-          </div>
+        <div class="card">
+          <div class="tabs"><button class="tab active" data-authmode="login">Sign in</button><button class="tab" data-authmode="signup">Create account</button></div>
           <form id="studentAuthForm">
-            <div class="field signup-only hidden">
-              <label for="studentName">Full name</label>
-              <input id="studentName" maxlength="100" autocomplete="name" placeholder="Your full name">
-            </div>
-            <div class="field signup-only hidden">
-              <label for="studentClass">Class / section</label>
-              <input id="studentClass" maxlength="30" placeholder="e.g. Class 10 A">
-            </div>
-            <div class="field">
-              <label for="studentEmail">Email address</label>
-              <input id="studentEmail" type="email" autocomplete="email" required placeholder="you@example.com">
-            </div>
-            <div class="field">
-              <label for="studentPassword">Password</label>
-              <input id="studentPassword" type="password" autocomplete="current-password" minlength="8" required placeholder="At least 8 characters">
-            </div>
-            <button class="primary" type="submit" id="studentSubmit">Sign in as student</button>
+            <div class="field signupfield hidden"><label for="studentName">Full name</label><input id="studentName" maxlength="100" autocomplete="name"></div>
+            <div class="field signupfield hidden"><label for="studentClass">Class / section</label><input id="studentClass" maxlength="30" placeholder="e.g. Class 10 A"></div>
+            <div class="field"><label for="studentEmail">Email address</label><input id="studentEmail" type="email" autocomplete="email" required></div>
+            <div class="field"><label for="studentPassword">Password</label><input id="studentPassword" type="password" minlength="8" autocomplete="current-password" required></div>
+            <button class="primary" id="studentSubmit" type="submit">Sign in as student</button>
             <div id="studentAuthMessage" aria-live="polite"></div>
           </form>
-          <p class="muted small" style="margin:18px 0 0">Authentication is not enabled yet. This form will be connected to Supabase next.</p>
+          <p class="muted small">Account access is handled by Supabase Authentication.</p>
         </div>
       </div>
     </section>
 
     <section class="page hidden" id="page-staffAuth">
-      <div class="auth-wrap">
-        <div class="eyebrow">AUTHORIZED PERSONNEL</div>
-        <h1>Staff portal</h1>
-        <p class="muted">A separate entry point for teachers and authorized administrators.</p>
-        <div class="card auth-card">
-          <div class="stat-icon">🛡️</div>
-          <h2>Staff sign in</h2>
-          <p class="muted small">Staff access will be checked against assigned roles in the backend. A staff email alone will not grant staff permissions.</p>
-          <form id="staffAuthForm">
-            <div class="field">
-              <label for="staffEmail">Staff email</label>
-              <input id="staffEmail" type="email" autocomplete="username" required placeholder="staff@school.edu">
-            </div>
-            <div class="field">
-              <label for="staffPassword">Password</label>
-              <input id="staffPassword" type="password" autocomplete="current-password" minlength="8" required placeholder="Enter your password">
-            </div>
-            <button class="primary" type="submit">Sign in as staff</button>
-            <div id="staffAuthMessage" aria-live="polite"></div>
-          </form>
-          <div class="notice">Staff account creation will not be public. An administrator will need to authorize staff accounts through the backend.</div>
-          <button class="secondary" data-page="auth">Go to student sign in</button>
-        </div>
+      <div class="authwrap"><div class="eyebrow">AUTHORIZED PERSONNEL</div><h1>Staff portal</h1><p class="muted">Staff access requires an assigned teacher_admin role.</p>
+        <div class="card"><div class="staticon">🛡️</div><form id="staffAuthForm">
+          <div class="field"><label for="staffEmail">Staff email</label><input id="staffEmail" type="email" autocomplete="username" required></div>
+          <div class="field"><label for="staffPassword">Password</label><input id="staffPassword" type="password" autocomplete="current-password" minlength="8" required></div>
+          <button class="primary" type="submit">Sign in as staff</button><div id="staffAuthMessage" aria-live="polite"></div>
+        </form><div class="notice">Staff access is verified against the database after authentication. A student account cannot use this page to gain staff permissions.</div>
+        <button class="secondary" data-page="studentAuth">Student sign in</button></div>
       </div>
     </section>
 
-    <section class="page hidden" id="page-dashboard">
-      <div class="eyebrow">PERSONAL WORKSPACE</div>
-      <h1 id="dashboardTitle">Your dashboard</h1>
-      <p class="muted" id="dashboardDescription">Your portal overview.</p>
-      <div class="card">
-        <div class="notice">This preview dashboard is not connected to real accounts yet. Your role and permissions will be verified by Supabase when the backend is implemented.</div>
-        <h2>Welcome</h2>
-        <p class="muted" id="dashboardEmail"></p>
-        <button class="secondary" data-page="notices">Browse notices</button>
-        <button class="secondary" data-page="lostfound">Lost & Found</button>
-        <button class="secondary" id="demoSignOut">Exit preview</button>
-      </div>
-      <div class="section-head"><h2>Staff tools</h2></div>
-      <div class="card hidden" id="staffTools">
-        <p class="muted">The report moderation queue and notice management tools will appear here after secure backend integration.</p>
-      </div>
+    <section class="page hidden" id="page-staff">
+      <div class="eyebrow">AUTHORIZED WORKSPACE</div><h1>Staff dashboard</h1><p class="muted">Review reports and manage school notices.</p>
+      <div id="staffMessage" aria-live="polite"></div>
+      <div class="sectionhead"><h2>Lost & Found queue</h2><button class="secondary" id="refreshStaff">Refresh</button></div>
+      <div class="card tablewrap"><table><thead><tr><th>Item / details</th><th>Report</th><th>Date / location</th><th>Status</th><th>Action</th></tr></thead><tbody id="staffReports"><tr><td colspan="5">Loading reports…</td></tr></tbody></table></div>
+      <div class="sectionhead"><h2>Notice management</h2><button class="secondary" data-page="notices">Open notice board</button></div>
+      <div class="card"><p class="muted">Use the notice editor on the Notice Board to publish or update announcements.</p></div>
     </section>
   </main>
 </div>
-
-<footer>KPS Portal · School Hub · Frontend preview — no real account or report data is stored.</footer>
+<footer>KPS Portal · Supabase connected frontend · K.P AI integration pending</footer>
 <div class="toast hidden" id="toast" role="status" aria-live="polite"></div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 "use strict";
 
-const $ = (id) => document.getElementById(id);
-const pages = ["home", "notices", "lostfound", "ai", "auth", "staffAuth", "dashboard"];
+/* SUPABASE CONFIGURATION */
+const SUPABASE_URL = "https://wmpofdbhozzoqgryapro.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY = "PASTE_YOUR_SUPABASE_PUBLISHABLE_KEY_HERE";
+
+const $ = id => document.getElementById(id);
+let sb = null;
+let currentUser = null;
+let currentProfile = null;
 let authMode = "login";
-let selectedAuth = "student";
-let demoReports = [];
-let demoUser = null;
 let toastTimer = null;
+let noticeRows = [];
 
-const demoNotices = [
-  {
-    icon: "📢",
-    title: "Welcome to KPS Portal",
-    text: "Your new digital school hub for notices, student resources, and Lost & Found.",
-    tag: "PORTAL"
-  },
-  {
-    icon: "📚",
-    title: "Stay updated",
-    text: "Check the notice board regularly for official school announcements.",
-    tag: "REMINDER"
-  },
-  {
-    icon: "🔎",
-    title: "Lost something at school?",
-    text: "Use Lost & Found to prepare a report. Real submission will be enabled with the backend.",
-    tag: "LOST & FOUND"
-  }
-];
+const pages = ["home","notices","lostfound","ai","studentAuth","staffAuth","staff"];
 
-function escapeHTML(value) {
-  return String(value ?? "").replace(/[&<>"']/g, (char) => ({
-    "&": "&amp;",
-    "<": "&lt;",
-    ">": "&gt;",
-    '"': "&quot;",
-    "'": "&#39;"
-  })[char]);
+function esc(value) {
+  return String(value ?? "").replace(/[&<>"']/g, c => ({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+  })[c]);
 }
 
-function showToast(message) {
-  const toast = $("toast");
-  toast.textContent = message;
-  toast.classList.remove("hidden");
-  if (toastTimer) clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => toast.classList.add("hidden"), 3200);
+function toast(message) {
+  $("toast").textContent = message;
+  $("toast").classList.remove("hidden");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => $("toast").classList.add("hidden"), 3500);
 }
 
-function showMessage(id, message, type = "") {
-  const element = $(id);
-  if (!element) return;
-  element.className = type ? `notice ${type}` : "notice";
-  element.textContent = message;
+function message(id, text, type = "") {
+  const el = $(id);
+  if (!el) return;
+  el.textContent = text;
+  el.className = type ? `notice ${type}` : "notice";
 }
 
-function goTo(page) {
+function clearMessage(id) {
+  const el = $(id);
+  if (el) { el.textContent = ""; el.className = ""; }
+}
+
+function go(page) {
   if (!pages.includes(page)) page = "home";
+  if (page === "staff" && currentProfile?.role !== "teacher_admin") {
+    page = "staffAuth";
+    toast("Please sign in with an authorized staff account.");
+  }
+  pages.forEach(name => $(`page-${name}`).classList.toggle("hidden", name !== page));
+  document.querySelectorAll("[data-page].navbtn").forEach(b => b.classList.toggle("active", b.dataset.page === page));
+  window.scrollTo({top:0,behavior:"smooth"});
+  if (page === "notices") loadNotices();
+  if (page === "lostfound") loadMyReports();
+  if (page === "staff") loadStaffReports();
+}
 
-  pages.forEach((name) => {
-    const section = $(`page-${name}`);
-    if (section) section.classList.toggle("hidden", name !== page);
-  });
+document.querySelectorAll("[data-page]").forEach(el => el.addEventListener("click", () => go(el.dataset.page)));
+$("homeBrand").addEventListener("click", e => { e.preventDefault(); go("home"); });
+$("headerAuth").addEventListener("click", () => go("studentAuth"));
+$("signOut").addEventListener("click", async () => {
+  if (!sb) return;
+  const {error} = await sb.auth.signOut();
+  if (error) return toast(error.message);
+  currentUser = null;
+  currentProfile = null;
+  updateAccountUI();
+  go("home");
+  toast("Signed out.");
+});
 
-  document.querySelectorAll("[data-page]").forEach((button) => {
-    if (button.classList.contains("nav-btn")) {
-      button.classList.toggle("active", button.dataset.page === page);
+function setAuthMode(mode) {
+  authMode = mode;
+  document.querySelectorAll("[data-authmode]").forEach(b => b.classList.toggle("active", b.dataset.authmode === mode));
+  document.querySelectorAll(".signupfield").forEach(el => el.classList.toggle("hidden", mode !== "signup"));
+  $("studentName").required = mode === "signup";
+  $("studentClass").required = mode === "signup";
+  $("studentPassword").autocomplete = mode === "signup" ? "new-password" : "current-password";
+  $("studentSubmit").textContent = mode === "signup" ? "Create student account" : "Sign in as student";
+  clearMessage("studentAuthMessage");
+}
+document.querySelectorAll("[data-authmode]").forEach(b => b.addEventListener("click", () => setAuthMode(b.dataset.authmode)));
+document.querySelectorAll("[data-authchoice]").forEach(b => b.addEventListener("click", () => {
+  if (b.dataset.authchoice === "staff") go("staffAuth");
+  else go("studentAuth");
+}));
+
+function updateAccountUI() {
+  const signedIn = !!currentUser;
+  $("headerStatus").textContent = signedIn ? (currentProfile?.full_name || currentUser.email) : "Not signed in";
+  $("headerAuth").classList.toggle("hidden", signedIn);
+  $("signOut").classList.toggle("hidden", !signedIn);
+  $("staffNav").classList.toggle("hidden", currentProfile?.role !== "teacher_admin");
+  $("staffMobileNav").classList.toggle("hidden", currentProfile?.role !== "teacher_admin");
+  $("noticeEditor").classList.toggle("hidden", currentProfile?.role !== "teacher_admin");
+}
+
+function requireSupabase() {
+  if (!sb) throw new Error("Supabase is not configured. Check the publishable key in index.html.");
+}
+
+async function fetchProfile(user) {
+  const {data, error} = await sb.from("profiles")
+    .select("id,full_name,student_class,role")
+    .eq("id", user.id)
+    .maybeSingle();
+
+  if (error) throw error;
+  if (!data) throw new Error("Your profile is missing. Contact the portal administrator to repair your profile.");
+  return data;
+}
+
+async function refreshAccount() {
+  const {data, error} = await sb.auth.getSession();
+  if (error) throw error;
+  const session = data.session;
+  currentUser = session?.user ?? null;
+  currentProfile = null;
+
+  if (currentUser) {
+    try {
+      currentProfile = await fetchProfile(currentUser);
+    } catch (err) {
+      console.error("Profile load failed:", err);
+      // Preserve the authenticated session, but do not assume any role.
     }
-  });
-
-  if (page === "auth") setAuthChoice("student");
-  if (page === "staffAuth") setAuthChoice("staff");
-
-  window.scrollTo({ top: 0, behavior: "smooth" });
-}
-
-document.querySelectorAll("[data-page]").forEach((element) => {
-  element.addEventListener("click", () => goTo(element.dataset.page));
-});
-
-document.querySelectorAll("[data-auth]").forEach((button) => {
-  button.addEventListener("click", () => setAuthChoice(button.dataset.auth));
-});
-
-function setAuthChoice(choice) {
-  selectedAuth = choice === "staff" ? "staff" : "student";
-  document.querySelectorAll("[data-auth]").forEach((button) => {
-    button.classList.toggle("selected", button.dataset.auth === selectedAuth);
-  });
-
-  if (selectedAuth === "staff") {
-    goTo("staffAuth");
-  } else if (!$("page-auth").classList.contains("hidden")) {
-    updateAuthMode();
   }
+  updateAccountUI();
+  return currentUser;
 }
 
-document.querySelectorAll("[data-mode]").forEach((button) => {
-  button.addEventListener("click", () => {
-    authMode = button.dataset.mode;
-    updateAuthMode();
-  });
-});
+async function loadNotices() {
+  if (!sb) return;
+  $("noticeList").innerHTML = '<div class="empty">Loading notices…</div>';
+  $("homeNotices").innerHTML = '<div class="empty">Loading notices…</div>';
 
-function updateAuthMode() {
-  document.querySelectorAll("[data-mode]").forEach((button) => {
-    button.classList.toggle("active", button.dataset.mode === authMode);
-  });
+  const {data, error} = await sb.from("public_notices")
+    .select("id,title,content,created_at")
+    .eq("published", true)
+    .order("created_at", {ascending:false})
+    .limit(30);
 
-  document.querySelectorAll(".signup-only").forEach((element) => {
-    element.classList.toggle("hidden", authMode !== "signup");
-  });
+  if (error) {
+    const html = `<div class="empty">Could not load notices: ${esc(error.message)}</div>`;
+    $("noticeList").innerHTML = html;
+    $("homeNotices").innerHTML = html;
+    return;
+  }
 
-  $("studentName").required = authMode === "signup";
-  $("studentClass").required = authMode === "signup";
-  $("studentPassword").autocomplete = authMode === "signup" ? "new-password" : "current-password";
-  $("studentSubmit").textContent = authMode === "signup" ? "Create student account" : "Sign in as student";
-  $("studentAuthMessage").replaceChildren();
-}
-
-function renderNotices() {
-  const html = demoNotices.map((notice) => `
-    <article class="list-item">
-      <div class="list-icon">${notice.icon}</div>
+  noticeRows = data || [];
+  const html = noticeRows.length ? noticeRows.map(n => `
+    <article class="item">
+      <div class="itemicon">📢</div>
       <div style="flex:1;min-width:0">
-        <div class="tag">${escapeHTML(notice.tag)}</div>
-        <h3 style="margin-top:9px">${escapeHTML(notice.title)}</h3>
-        <p>${escapeHTML(notice.text)}</p>
+        <span class="tag">ANNOUNCEMENT</span>
+        <h3 style="margin-top:8px">${esc(n.title)}</h3>
+        <p>${esc(n.content).replace(/\n/g,"<br>")}</p>
+        <p style="margin-top:7px;font-size:11px">${esc(new Date(n.created_at).toLocaleDateString())}</p>
       </div>
-    </article>
-  `).join("");
+    </article>`).join("") : '<div class="empty">No published notices yet.</div>';
 
-  $("homeNotices").innerHTML = html;
   $("noticeList").innerHTML = html;
+  $("homeNotices").innerHTML = html;
 }
 
-function renderReports() {
-  const container = $("reportList");
-
-  if (demoReports.length === 0) {
-    container.innerHTML = '<div class="empty">No demo reports yet.<br><span class="small">Your submitted preview reports will appear here.</span></div>';
-    return;
-  }
-
-  container.innerHTML = demoReports.map((report) => `
-    <article class="list-item">
-      <div class="list-icon">${report.type === "Lost" ? "🔎" : "📦"}</div>
-      <div style="flex:1;min-width:0">
-        <div class="tag">${escapeHTML(report.type)} · DEMO</div>
-        <h3 style="margin-top:9px">${escapeHTML(report.name)}</h3>
-        <p>${escapeHTML(report.description)}</p>
-        <p style="margin-top:6px">📍 ${escapeHTML(report.location)} · ${escapeHTML(report.date)}</p>
-      </div>
-    </article>
-  `).join("");
-}
-
-$("reportForm").addEventListener("submit", (event) => {
+$("studentAuthForm").addEventListener("submit", async event => {
   event.preventDefault();
-
-  const report = {
-    type: $("reportType").value,
-    name: $("itemName").value.trim(),
-    location: $("itemLocation").value.trim(),
-    date: $("itemDate").value,
-    description: $("itemDescription").value.trim()
-  };
-
-  if (!report.name || !report.location || !report.date || !report.description) {
-    showMessage("reportMessage", "Please complete every field.", "error");
-    return;
-  }
-
-  demoReports.unshift(report);
-  renderReports();
-  $("reportForm").reset();
-  showMessage("reportMessage", "Demo report added to this page. It has NOT been sent to school staff or saved to a database.", "success");
-});
-
-$("studentAuthForm").addEventListener("submit", (event) => {
-  event.preventDefault();
-
+  if (!sb) return message("studentAuthMessage","Supabase is not configured. Add your publishable key first.","error");
   const email = $("studentEmail").value.trim();
   const password = $("studentPassword").value;
+  const button = $("studentSubmit");
+  button.disabled = true;
+  clearMessage("studentAuthMessage");
 
-  if (!email || password.length < 8) {
-    showMessage("studentAuthMessage", "Enter a valid email and a password of at least 8 characters.", "error");
-    return;
+  try {
+    if (authMode === "signup") {
+      const fullName = $("studentName").value.trim();
+      const studentClass = $("studentClass").value.trim();
+      if (!fullName || !studentClass) throw new Error("Enter your full name and class.");
+
+      const {data, error} = await sb.auth.signUp({
+        email, password,
+        options: {data:{full_name:fullName,student_class:studentClass}}
+      });
+      if (error) throw error;
+
+      if (!data.session) {
+        message("studentAuthMessage","Account signup submitted. Check your email for the Supabase verification link, then sign in.","success");
+      } else {
+        await refreshAccount();
+        message("studentAuthMessage","Student account created and signed in.","success");
+        go("home");
+        await loadMyReports();
+      }
+    } else {
+      const {error} = await sb.auth.signInWithPassword({email,password});
+      if (error) throw error;
+      await refreshAccount();
+      if (currentProfile?.role !== "student") {
+        await sb.auth.signOut();
+        currentUser = null;
+        currentProfile = null;
+        updateAccountUI();
+        throw new Error("This account is not registered with the student role. Use the correct sign-in page.");
+      }
+      message("studentAuthMessage","Signed in successfully.","success");
+      go("home");
+      await loadNotices();
+    }
+  } catch (err) {
+    message("studentAuthMessage",err.message || "Authentication failed.","error");
+  } finally {
+    button.disabled = false;
   }
-
-  if (authMode === "signup" && (!$("studentName").value.trim() || !$("studentClass").value.trim())) {
-    showMessage("studentAuthMessage", "Enter your name and class.", "error");
-    return;
-  }
-
-  showMessage(
-    "studentAuthMessage",
-    "Frontend ready, but account creation and sign-in are not connected yet. No account was created and your password was not sent anywhere.",
-    "error"
-  );
 });
 
-$("staffAuthForm").addEventListener("submit", (event) => {
+$("staffAuthForm").addEventListener("submit", async event => {
   event.preventDefault();
-
+  if (!sb) return message("staffAuthMessage","Supabase is not configured. Add your publishable key first.","error");
   const email = $("staffEmail").value.trim();
   const password = $("staffPassword").value;
+  const button = $("staffAuthForm").querySelector('button[type="submit"]');
+  button.disabled = true;
+  clearMessage("staffAuthMessage");
 
-  if (!email || password.length < 8) {
-    showMessage("staffAuthMessage", "Enter a valid staff email and password.", "error");
+  try {
+    const {error} = await sb.auth.signInWithPassword({email,password});
+    if (error) throw error;
+    await refreshAccount();
+
+    if (currentProfile?.role !== "teacher_admin") {
+      await sb.auth.signOut();
+      currentUser = null;
+      currentProfile = null;
+      updateAccountUI();
+      throw new Error("Staff access denied. This account does not have the teacher_admin role.");
+    }
+    message("staffAuthMessage","Staff sign-in successful.","success");
+    go("staff");
+    await loadStaffReports();
+  } catch (err) {
+    message("staffAuthMessage",err.message || "Staff sign-in failed.","error");
+  } finally {
+    button.disabled = false;
+  }
+});
+
+$("reportForm").addEventListener("submit", async event => {
+  event.preventDefault();
+  if (!sb) return message("reportMessage","Supabase is not configured.","error");
+  if (!currentUser || !currentProfile) {
+    message("reportMessage","Please sign in with your student account first.","error");
+    return;
+  }
+  if (currentProfile.role !== "student") {
+    message("reportMessage","Only student accounts can submit student reports.","error");
     return;
   }
 
-  showMessage(
-    "staffAuthMessage",
-    "Staff authentication is not connected yet. No sign-in was attempted. Staff access will be verified securely by the backend.",
-    "error"
-  );
+  const report = {
+    student_id: currentUser.id,
+    report_type: $("reportType").value,
+    item_name: $("itemName").value.trim(),
+    location: $("itemLocation").value.trim(),
+    incident_date: $("itemDate").value,
+    description: $("itemDescription").value.trim(),
+    status: "pending"
+  };
+  if (!report.item_name || !report.location || !report.incident_date || !report.description) {
+    return message("reportMessage","Complete all fields before submitting.","error");
+  }
+
+  const button = $("reportSubmit");
+  button.disabled = true;
+  try {
+    const {error} = await sb.from("lost_found_reports").insert(report);
+    if (error) throw error;
+    $("reportForm").reset();
+    setDefaultDate();
+    message("reportMessage","Report submitted. It is pending staff review.","success");
+    await loadMyReports();
+  } catch (err) {
+    message("reportMessage",err.message || "Could not submit report.","error");
+  } finally {
+    button.disabled = false;
+  }
 });
 
-$("headerLogin").addEventListener("click", () => goTo("auth"));
-
-$("demoSignOut").addEventListener("click", () => {
-  demoUser = null;
-  $("headerStatus").textContent = "Guest access";
-  $("headerLogin").classList.remove("hidden");
-  goTo("home");
-  showToast("Exited the local preview.");
-});
-
-function init() {
-  renderNotices();
-  renderReports();
-  updateAuthMode();
-
-  const today = new Date();
-  const localDate = new Date(today.getTime() - today.getTimezoneOffset() * 60000)
-    .toISOString().slice(0, 10);
-  $("itemDate").value = localDate;
+function statusTag(status) {
+  return `<span class="tag">${esc(String(status).toUpperCase())}</span>`;
 }
 
-init();
+async function loadMyReports() {
+  if (!sb) return;
+  if (!currentUser) {
+    $("reportList").innerHTML = '<div class="empty">Sign in to view your reports.</div>';
+    return;
+  }
+
+  $("reportList").innerHTML = '<div class="empty">Loading your reports…</div>';
+  const {data,error} = await sb.from("lost_found_reports")
+    .select("id,report_type,item_name,description,location,incident_date,status,created_at")
+    .eq("student_id",currentUser.id)
+    .order("created_at",{ascending:false})
+    .limit(50);
+
+  if (error) {
+    $("reportList").innerHTML = `<div class="empty">Could not load reports: ${esc(error.message)}</div>`;
+    return;
+  }
+  if (!data?.length) {
+    $("reportList").innerHTML = '<div class="empty">You have not submitted any reports yet.</div>';
+    return;
+  }
+  $("reportList").innerHTML = data.map(r => `
+    <article class="item">
+      <div class="itemicon">${r.report_type === "lost" ? "🔎" : "📦"}</div>
+      <div style="flex:1;min-width:0">
+        ${statusTag(r.status)}
+        <h3 style="margin-top:8px">${esc(r.item_name)}</h3>
+        <p>${esc(r.description)}</p>
+        <p style="margin-top:6px">📍 ${esc(r.location)} · ${esc(r.incident_date)}</p>
+      </div>
+    </article>`).join("");
+}
+
+async function loadStaffReports() {
+  if (!sb || currentProfile?.role !== "teacher_admin") return;
+  $("staffReports").innerHTML = '<tr><td colspan="5">Loading…</td></tr>';
+
+  const {data,error} = await sb.from("lost_found_reports")
+    .select("id,student_id,report_type,item_name,description,location,incident_date,status,created_at")
+    .order("created_at",{ascending:false}).limit(100);
+
+  if (error) {
+    $("staffReports").innerHTML = `<tr><td colspan="5">${esc(error.message)}</td></tr>`;
+    return;
+  }
+  if (!data?.length) {
+    $("staffReports").innerHTML = '<tr><td colspan="5">No reports submitted yet.</td></tr>';
+    return;
+  }
+
+  $("staffReports").innerHTML = data.map(r => `
+    <tr>
+      <td><strong>${esc(r.item_name)}</strong><p class="muted small">${esc(r.description)}</p></td>
+      <td>${esc(r.report_type)}</td>
+      <td>${esc(r.incident_date)}<br><span class="muted small">${esc(r.location)}</span></td>
+      <td>${statusTag(r.status)}</td>
+      <td><select aria-label="Change report status" data-report-status="${esc(r.id)}">
+        ${["pending","approved","rejected","returned"].map(s => `<option value="${s}" ${s===r.status?"selected":""}>${s}</option>`).join("")}
+      </select><button class="secondary" data-save-report="${esc(r.id)}" style="margin-top:5px">Save</button></td>
+    </tr>`).join("");
+}
+
+$("staffReports").addEventListener("click", async event => {
+  const button = event.target.closest("[data-save-report]");
+  if (!button) return;
+  if (currentProfile?.role !== "teacher_admin") return toast("Staff access required.");
+
+  const id = button.dataset.saveReport;
+  const select = $("staffReports").querySelector(`[data-report-status="${CSS.escape(id)}"]`);
+  if (!select) return;
+  button.disabled = true;
+
+  try {
+    const {error} = await sb.from("lost_found_reports")
+      .update({status:select.value}).eq("id",id);
+    if (error) throw error;
+    message("staffMessage","Report status updated.","success");
+    await loadStaffReports();
+  } catch (err) {
+    message("staffMessage",err.message || "Could not update report.","error");
+  } finally {
+    button.disabled = false;
+  }
+});
+
+$("noticeForm").addEventListener("submit", async event => {
+  event.preventDefault();
+  if (!sb || currentProfile?.role !== "teacher_admin") {
+    return message("noticeFormMessage","Authorized staff access is required.","error");
+  }
+
+  const title = $("noticeTitle").value.trim();
+  const content = $("noticeContent").value.trim();
+  const published = $("noticePublish").checked;
+  if (!title || !content) return message("noticeFormMessage","Enter a title and announcement.","error");
+
+  const button = $("noticeForm").querySelector('button[type="submit"]');
+  button.disabled = true;
+  try {
+    const {error} = await sb.from("public_notices").insert({
+      title, content, published, created_by:currentUser.id
+    });
+    if (error) throw error;
+    $("noticeForm").reset();
+    message("noticeFormMessage","Notice saved.","success");
+    await loadNotices();
+  } catch (err) {
+    message("noticeFormMessage",err.message || "Could not save notice.","error");
+  } finally {
+    button.disabled = false;
+  }
+});
+
+$("refreshReports").addEventListener("click",loadMyReports);
+$("refreshStaff").addEventListener("click",loadStaffReports);
+
+function setDefaultDate() {
+  const now = new Date();
+  $("itemDate").value = new Date(now.getTime() - now.getTimezoneOffset()*60000).toISOString().slice(0,10);
+}
+
+async function start() {
+  setDefaultDate();
+
+  if (!window.supabase?.createClient) {
+    message("reportTopMessage","Could not load the Supabase library. Check your internet connection and reload.","error");
+    $("homeNotices").innerHTML = '<div class="empty">Supabase library failed to load.</div>';
+    return;
+  }
+  if (!SUPABASE_PUBLISHABLE_KEY || SUPABASE_PUBLISHABLE_KEY === "PASTE_YOUR_SUPABASE_PUBLISHABLE_KEY_HERE") {
+    message("reportTopMessage","Add your Supabase publishable key in the SUPABASE_PUBLISHABLE_KEY setting near the top of the script.","error");
+    $("homeNotices").innerHTML = '<div class="empty">Add your Supabase publishable key to load notices.</div>';
+    return;
+  }
+
+  try {
+    sb = window.supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY);
+    sb.auth.onAuthStateChange((event,session) => {
+      // Defer profile queries to avoid performing Supabase calls inside this callback.
+      if (event === "SIGNED_OUT") {
+        currentUser = null;
+        currentProfile = null;
+        updateAccountUI();
+      } else if (event === "SIGNED_IN" && session?.user) {
+        setTimeout(async () => {
+          try {
+            await refreshAccount();
+            await loadNotices();
+          } catch (err) {
+            console.error("Account refresh:",err);
+          }
+        },0);
+      }
+    });
+
+    await refreshAccount();
+    await loadNotices();
+    if (currentUser && currentProfile?.role === "teacher_admin") {
+      await loadStaffReports();
+    }
+  } catch (err) {
+    console.error(err);
+    message("reportTopMessage",err.message || "Could not initialize Supabase.","error");
+  }
+}
+
+start();
 </script>
 </body>
 </html>
