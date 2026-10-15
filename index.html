@@ -1,461 +1,706 @@
 
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#08101f">
-<title>KPS School Portal</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080d1b">
+<title>KPS Portal — School Hub</title>
+
 <style>
-:root{color-scheme:dark;--bg:#08101f;--panel:#111d31;--blue:#78aaff;--text:#f4f7ff;--muted:#aab8d0;--border:#283a56;--green:#68d6b0}
-*{box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-padding-top:85px}
-body{margin:0;font:16px/1.6 system-ui,Segoe UI,Arial;background:var(--bg);color:var(--text)}
-a{color:var(--blue)}
-button,input,select,textarea{font:inherit}
-button{cursor:pointer;border:0;border-radius:10px;padding:11px 16px;background:#356fc3;color:white;font-weight:650}
-button:disabled{opacity:.65;cursor:wait}
-button.secondary{background:#263750}
-button.danger{background:#8f3545}
-.wrap{width:min(1100px,92%);margin:auto}
-.top{position:sticky;top:0;background:#08101fee;backdrop-filter:blur(12px);border-bottom:1px solid var(--border);z-index:4}
-.nav{min-height:70px;display:flex;align-items:center;justify-content:space-between;gap:14px}
-.brand{font-size:1.15rem;font-weight:800}
-.navlinks{display:flex;gap:18px;flex-wrap:wrap}
-.navlinks a{text-decoration:none;color:var(--text)}
-.hero{padding:64px 0 35px}
-.eyebrow{color:var(--blue);font-weight:750;letter-spacing:.13em;text-transform:uppercase;font-size:.78rem}
-.hero h1{font-size:clamp(2.3rem,6vw,4rem);line-height:1.08;max-width:780px;margin:12px 0}
-.muted{color:var(--muted)}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,270px),1fr));gap:16px}
-.card{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:22px}
-.section{padding:32px 0}
-.section h2{margin:0 0 8px;font-size:1.8rem}
-.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
-.formgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-.field{display:flex;flex-direction:column;gap:5px}
-.field.full{grid-column:1/-1}
-input,select,textarea{background:#091426;color:var(--text);border:1px solid var(--border);border-radius:9px;padding:11px;width:100%}
-textarea{min-height:90px;resize:vertical}
-.notice{border:1px solid var(--border);background:#0c1729;border-radius:12px;padding:15px;margin:10px 0}
-.notice h3{margin:0}
-.pill{display:inline-block;border:1px solid var(--border);border-radius:999px;padding:2px 9px;font-size:.8rem;color:var(--green)}
-.hidden{display:none!important}
-.status{margin:12px 0;padding:10px 12px;border-radius:9px;background:#172a43;overflow-wrap:anywhere}
-.status.error{color:#ffd1d1;background:#44202a}
-.status.ok{color:#b9ffe4;background:#12372f}
-.small{font-size:.88rem}
-.row{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
-footer{padding:28px 0;border-top:1px solid var(--border);color:var(--muted);margin-top:35px}
-@media(max-width:650px){.nav{align-items:flex-start;padding:14px 0;flex-direction:column}.formgrid{grid-template-columns:1fr}.field.full{grid-column:auto}.hero{padding-top:42px}}
+:root {
+  --bg: #080d1b;
+  --panel: #111a2d;
+  --panel2: #17233a;
+  --text: #f2f5ff;
+  --muted: #9baac4;
+  --blue: #6c8cff;
+  --cyan: #59e1ed;
+  --border: rgba(255,255,255,.09);
+  --radius: 20px;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, sans-serif;
+  background:
+    radial-gradient(ellipse at 80% 0%, rgba(65,91,190,.15), transparent 38%),
+    var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+button, input, select, textarea { font: inherit; }
+button { cursor: pointer; }
+button:focus-visible, input:focus-visible, select:focus-visible,
+textarea:focus-visible, a:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 3px;
+}
+button:disabled { opacity: .5; cursor: not-allowed; }
+a { color: inherit; text-decoration: none; }
+.hidden { display: none !important; }
+.muted { color: var(--muted); }
+.small { font-size: 12px; }
+.eyebrow {
+  color: var(--cyan);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+h1, h2, h3, p { margin-top: 0; }
+h1 { font-size: clamp(28px, 4vw, 42px); letter-spacing: -1.5px; }
+h2 { letter-spacing: -.5px; }
+button, .btn { transition: transform .2s, background .2s, border-color .2s; }
+button:hover:not(:disabled), .btn:hover { transform: translateY(-2px); }
+.primary {
+  background: linear-gradient(120deg, #6587ff, #8469ef);
+  border: 0; color: white; font-weight: 750;
+  border-radius: 12px; padding: 12px 17px;
+}
+.secondary {
+  background: rgba(255,255,255,.045);
+  color: var(--text); border: 1px solid var(--border);
+  border-radius: 12px; padding: 11px 15px;
+}
+.danger { color: #ff9aab; }
+.topbar {
+  position: sticky; top: 0; z-index: 20;
+  background: rgba(8,13,27,.84);
+  backdrop-filter: blur(18px);
+  border-bottom: 1px solid var(--border);
+}
+.top-inner {
+  max-width: 1400px; margin: auto; padding: 14px 24px;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+}
+.brand { display:flex; align-items:center; gap: 11px; font-weight: 850; }
+.brand-icon {
+  width: 43px; height: 43px; border-radius: 14px;
+  display:grid; place-items:center;
+  background: linear-gradient(135deg,#6587ff,#6f56cf);
+  box-shadow: 0 6px 25px #617bff35; font-size: 19px;
+}
+.brand small { display:block; color:var(--muted); font-size:10px; font-weight:600; margin-top:3px; }
+.top-actions { display:flex; gap:9px; align-items:center; }
+.layout {
+  max-width: 1400px; margin:auto; padding: 24px;
+  display:grid; grid-template-columns: 235px minmax(0,1fr); gap:24px;
+}
+.sidebar {
+  background: rgba(17,26,45,.8); border:1px solid var(--border);
+  border-radius:var(--radius); padding:17px; height:fit-content;
+  position:sticky; top:88px;
+}
+.nav-label { color:#71829f; font-size:10px; letter-spacing:1.5px; font-weight:800; margin:16px 10px 9px; }
+.nav-btn {
+  display:flex; align-items:center; gap:12px; width:100%;
+  padding:12px; border:1px solid transparent; border-radius:12px;
+  color:var(--muted); background:transparent; text-align:left; margin:3px 0;
+}
+.nav-btn .ico { width:23px; text-align:center; font-size:17px; }
+.nav-btn.active, .nav-btn:hover {
+  color:white; background:linear-gradient(100deg,#6587ff22,#8067ee10);
+  border-color:#718cff30;
+}
+.content { min-width:0; }
+.page { animation:fadeUp .35s ease both; }
+@keyframes fadeUp { from {opacity:0;transform:translateY(8px)} to {opacity:1;transform:translateY(0)} }
+.hero {
+  border:1px solid #7e8dff35; border-radius:26px; padding:32px;
+  background:
+    radial-gradient(circle at 85% 20%,#7a69f52b,transparent 32%),
+    linear-gradient(120deg,#19294a,#111a30 70%);
+  position:relative; overflow:hidden;
+}
+.hero:after {
+  content:"✦"; position:absolute; right:9%; top:15%;
+  font-size:100px; color:#91aaff13; animation:float 5s ease-in-out infinite;
+}
+@keyframes float { 50% { transform:translateY(-10px) rotate(10deg) } }
+.hero p { color:#b6c5df; max-width:550px; line-height:1.7; }
+.hero-actions { display:flex; flex-wrap:wrap; gap:10px; margin-top:22px; }
+.grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:15px; margin:20px 0; }
+.card {
+  border:1px solid var(--border); border-radius:var(--radius);
+  background:linear-gradient(145deg,rgba(20,31,52,.95),rgba(15,23,40,.95));
+  padding:20px; min-width:0;
+}
+.card h3 { margin-bottom:8px; font-size:16px; }
+.stat { font-size:28px; font-weight:850; margin:12px 0 5px; }
+.stat-icon {
+  width:43px; height:43px; border-radius:14px; display:grid; place-items:center;
+  background:#718cff1b; font-size:21px; margin-bottom:18px;
+}
+.section-head { display:flex; align-items:center; justify-content:space-between; gap:12px; margin:27px 0 14px; }
+.section-head h2 { margin:0; font-size:21px; }
+.list { display:grid; gap:10px; }
+.list-item {
+  display:flex; gap:13px; align-items:flex-start;
+  border:1px solid var(--border); border-radius:15px;
+  padding:15px; background:#ffffff04;
+}
+.list-icon { flex-shrink:0; width:39px; height:39px; display:grid; place-items:center; border-radius:12px; background:#6e89ff18; }
+.list-item h3 { margin:2px 0 6px; font-size:14px; }
+.list-item p { margin:0; font-size:13px; color:var(--muted); line-height:1.55; overflow-wrap:anywhere; }
+.tag { display:inline-block; border-radius:30px; padding:5px 9px; background:#718cff20; color:#b6c5ff; font-size:10px; font-weight:800; }
+.empty { text-align:center; padding:30px 15px; border:1px dashed #34425e; border-radius:15px; color:var(--muted); }
+.form-grid { display:grid; grid-template-columns:1fr 1fr; gap:15px; }
+.field { display:grid; gap:7px; min-width:0; }
+.field.full { grid-column:1/-1; }
+.field label { font-size:12px; color:#c5d0e5; font-weight:700; }
+.field input, .field select, .field textarea {
+  width:100%; min-width:0; border:1px solid #34425b; background:#0b1324;
+  color:var(--text); padding:12px 13px; border-radius:11px;
+}
+.field textarea { min-height:105px; resize:vertical; }
+.field input::placeholder, .field textarea::placeholder { color:#667894; }
+.form-actions { display:flex; flex-wrap:wrap; gap:10px; margin-top:17px; }
+.notice {
+  padding:12px 14px; border-radius:12px; font-size:13px;
+  background:#6e89ff15; border:1px solid #6e89ff35; color:#cbd7ff;
+  margin:14px 0; line-height:1.5;
+}
+.notice.error { background:#ff657415; border-color:#ff65743d; color:#ffb8c3; }
+.notice.success { background:#42d7a115; border-color:#42d7a13d; color:#9bf0ce; }
+.auth-wrap { max-width:760px; margin:24px auto; }
+.auth-switch { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:18px; }
+.auth-choice { padding:17px; border:1px solid var(--border); border-radius:15px; background:#101a2e; text-align:left; color:var(--text); }
+.auth-choice.selected { border-color:#7c92ff; background:#6e89ff17; }
+.auth-choice strong { display:block; margin:8px 0 5px; }
+.auth-choice span { color:var(--muted); font-size:12px; line-height:1.5; }
+.auth-card { max-width:540px; margin:auto; }
+.auth-card .field { margin-bottom:15px; }
+.auth-card .primary { width:100%; }
+.tabs { display:flex; gap:7px; margin-bottom:20px; }
+.tab { border:1px solid var(--border); border-radius:10px; background:transparent; color:var(--muted); padding:9px 14px; }
+.tab.active { background:#6c8cff22; color:white; border-color:#6c8cff55; }
+.table-wrap { overflow-x:auto; }
+table { border-collapse:collapse; width:100%; min-width:500px; font-size:13px; }
+th,td { padding:13px 12px; text-align:left; border-bottom:1px solid var(--border); }
+th { color:var(--muted); font-size:11px; }
+footer { max-width:1400px; margin:auto; padding:12px 24px 30px; color:#71809a; font-size:11px; text-align:center; }
+.mobile-nav { display:none; }
+.toast {
+  position:fixed; bottom:22px; right:22px; z-index:99; max-width:min(380px,calc(100vw - 44px));
+  padding:14px 18px; border-radius:13px; background:#202d46; border:1px solid #445778;
+  box-shadow:0 10px 35px #0005; animation:fadeUp .2s ease;
+}
+@media(max-width:950px) {
+  .layout { grid-template-columns:1fr; padding:16px; }
+  .sidebar { display:none; }
+  .mobile-nav {
+    display:flex; gap:7px; overflow-x:auto; padding-bottom:5px; margin-bottom:18px;
+  }
+  .mobile-nav .nav-btn { flex-shrink:0; width:auto; white-space:nowrap; padding:10px; }
+  .grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+}
+@media(max-width:580px) {
+  .top-inner { padding:11px 14px; }
+  .top-actions .secondary { padding:9px; }
+  .layout { padding:12px; }
+  .hero { padding:23px; }
+  .grid { grid-template-columns:1fr; }
+  .form-grid { grid-template-columns:1fr; }
+  .field.full { grid-column:auto; }
+  .section-head { align-items:flex-start; }
+  .brand small { display:none; }
+  .auth-switch { grid-template-columns:1fr; }
+}
+@media(prefers-reduced-motion:reduce) {
+  *,*::before,*::after { animation-duration:.01ms !important; animation-iteration-count:1 !important; scroll-behavior:auto !important; transition-duration:.01ms !important; }
+}
 </style>
 </head>
+
 <body>
-<header class="top"><div class="wrap nav">
-<a class="brand" href="#home">🎓 KPS School Portal</a>
-<nav class="navlinks">
-<a href="#services">Services</a><a href="#lostfound">Lost &amp; Found</a><a href="#notices">Notice Board</a><a href="#account">Sign in</a><a href="#kpai">K.P AI</a>
-</nav>
-</div></header>
+<header class="topbar">
+  <div class="top-inner">
+    <a class="brand" href="#" data-page="home" aria-label="KPS Portal home">
+      <div class="brand-icon">K</div>
+      <div>KPS PORTAL<small>SCHOOL HUB</small></div>
+    </a>
+    <div class="top-actions">
+      <span class="muted small" id="headerStatus">Guest access</span>
+      <button class="secondary" id="headerLogin">Sign in</button>
+    </div>
+  </div>
+</header>
 
-<main class="wrap" id="home">
-<section class="hero">
-<div class="eyebrow">Krishna Public School</div>
-<h1>Your school, <span style="color:var(--blue)">one portal.</span></h1>
-<p class="muted" style="max-width:720px">School notices, Lost &amp; Found, and K.P AI — together in one place. Lost &amp; Found reports are reviewed by authorized school staff before publication.</p>
-<div class="actions"><a href="#lostfound"><button>Report an item</button></a><a href="#notices"><button class="secondary">View notices</button></a></div>
-</section>
+<div class="layout">
+  <aside class="sidebar" aria-label="Main navigation">
+    <div class="nav-label">WORKSPACE</div>
+    <button class="nav-btn active" data-page="home"><span class="ico">⌂</span> Overview</button>
+    <button class="nav-btn" data-page="notices"><span class="ico">▤</span> Notice Board</button>
+    <button class="nav-btn" data-page="lostfound"><span class="ico">⌕</span> Lost & Found</button>
+    <button class="nav-btn" data-page="ai"><span class="ico">✧</span> K.P AI</button>
+    <div class="nav-label">ACCOUNT</div>
+    <button class="nav-btn" data-page="auth"><span class="ico">↗</span> Student Sign In</button>
+    <button class="nav-btn" data-page="staffAuth"><span class="ico">▣</span> Staff Sign In</button>
+    <div class="notice small">🔒 Account access will be secured through Supabase in the backend setup.</div>
+  </aside>
 
-<section class="section" id="services">
-<h2>Student services</h2><p class="muted">Useful school tools in one place.</p>
-<div class="grid">
-<article class="card"><h3>🔎 Lost &amp; Found</h3><p class="muted">Report a lost or found item and check its status.</p><a href="#lostfound">Open Lost &amp; Found →</a></article>
-<article class="card"><h3>📣 School Notice Board</h3><p class="muted">Browse notices approved by school staff.</p><a href="#notices">View approved notices →</a></article>
-<article class="card"><h3>🤖 K.P AI</h3><p class="muted">Open the school's AI study assistant.</p><a href="https://github.com/RichChiken/kp-ai-website/releases/tag/v1.0.0">K.P AI release →</a></article>
+  <main class="content">
+    <nav class="mobile-nav" aria-label="Mobile navigation">
+      <button class="nav-btn active" data-page="home">⌂ Home</button>
+      <button class="nav-btn" data-page="notices">▤ Notices</button>
+      <button class="nav-btn" data-page="lostfound">⌕ Lost & Found</button>
+      <button class="nav-btn" data-page="ai">✧ K.P AI</button>
+      <button class="nav-btn" data-page="auth">Student</button>
+      <button class="nav-btn" data-page="staffAuth">Staff</button>
+    </nav>
+
+    <section class="page" id="page-home">
+      <div class="hero">
+        <div class="eyebrow">YOUR SCHOOL, ONE PLACE</div>
+        <h1>Welcome to KPS Portal<span style="color:var(--cyan)">.</span></h1>
+        <p>A smarter place to stay updated, report lost belongings, discover school announcements, and access K.P AI.</p>
+        <div class="hero-actions">
+          <button class="primary" data-page="auth">Student sign in ↗</button>
+          <button class="secondary" data-page="lostfound">Report an item</button>
+        </div>
+      </div>
+
+      <div class="grid">
+        <div class="card">
+          <div class="stat-icon">▤</div>
+          <div class="muted small">SCHOOL UPDATES</div>
+          <div class="stat">Notices</div>
+          <p class="muted small">Keep up with school announcements.</p>
+          <button class="secondary" data-page="notices">View notices →</button>
+        </div>
+        <div class="card">
+          <div class="stat-icon">⌕</div>
+          <div class="muted small">LOST SOMETHING?</div>
+          <div class="stat">Lost & Found</div>
+          <p class="muted small">Report missing or found belongings.</p>
+          <button class="secondary" data-page="lostfound">Open reports →</button>
+        </div>
+        <div class="card">
+          <div class="stat-icon">✧</div>
+          <div class="muted small">YOUR AI ASSISTANT</div>
+          <div class="stat">K.P AI</div>
+          <p class="muted small">A school assistant experience, coming soon.</p>
+          <button class="secondary" data-page="ai">Explore K.P AI →</button>
+        </div>
+      </div>
+
+      <div class="section-head">
+        <h2>Latest announcements</h2>
+        <button class="secondary" data-page="notices">View all</button>
+      </div>
+      <div class="list" id="homeNotices"></div>
+    </section>
+
+    <section class="page hidden" id="page-notices">
+      <div class="eyebrow">STAY INFORMED</div>
+      <h1>Notice Board</h1>
+      <p class="muted">School updates and important announcements in one place.</p>
+      <div class="notice">This is a frontend preview. Official notices will load from the database after backend integration.</div>
+      <div class="list" id="noticeList"></div>
+    </section>
+
+    <section class="page hidden" id="page-lostfound">
+      <div class="eyebrow">FIND WHAT MATTERS</div>
+      <h1>Lost & Found</h1>
+      <p class="muted">Report a lost item or help return something you found.</p>
+      <div class="notice">Demo mode: reports are kept only in this browser session and are not sent to school staff.</div>
+
+      <div class="card">
+        <h2>Submit a report</h2>
+        <form id="reportForm">
+          <div class="form-grid">
+            <div class="field">
+              <label for="reportType">Report type</label>
+              <select id="reportType" required>
+                <option value="Lost">I lost an item</option>
+                <option value="Found">I found an item</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="itemName">Item name</label>
+              <input id="itemName" maxlength="80" required placeholder="e.g. Blue water bottle">
+            </div>
+            <div class="field">
+              <label for="itemLocation">Where?</label>
+              <input id="itemLocation" maxlength="100" required placeholder="e.g. Library">
+            </div>
+            <div class="field">
+              <label for="itemDate">Date</label>
+              <input id="itemDate" type="date" required>
+            </div>
+            <div class="field full">
+              <label for="itemDescription">Description</label>
+              <textarea id="itemDescription" maxlength="600" required placeholder="Describe the item and any details that help identify it."></textarea>
+            </div>
+          </div>
+          <div class="form-actions">
+            <button class="primary" type="submit">Submit demo report</button>
+            <button class="secondary" type="reset">Clear form</button>
+          </div>
+          <div id="reportMessage" aria-live="polite"></div>
+        </form>
+      </div>
+
+      <div class="section-head"><h2>Recent demo reports</h2></div>
+      <div class="list" id="reportList"></div>
+    </section>
+
+    <section class="page hidden" id="page-ai">
+      <div class="eyebrow">YOUR SCHOOL ASSISTANT</div>
+      <h1>Meet K.P AI<span style="color:var(--cyan)">.</span></h1>
+      <p class="muted">A dedicated assistant designed to help with school-related questions.</p>
+      <div class="card">
+        <div class="stat-icon">✧</div>
+        <h2>Something useful is on the way.</h2>
+        <p class="muted" style="line-height:1.8">K.P AI will have its own assistant interface once we connect its functionality. For now, this is the frontend placeholder — no fake AI responses.</p>
+        <button class="secondary" data-page="home">Back to overview</button>
+      </div>
+    </section>
+
+    <section class="page hidden" id="page-auth">
+      <div class="auth-wrap">
+        <div class="eyebrow">STUDENT ACCESS</div>
+        <h1>Student sign in</h1>
+        <p class="muted">Access the student portal using your student account.</p>
+
+        <div class="auth-switch">
+          <button class="auth-choice selected" data-auth="student">
+            <div style="font-size:23px">🎓</div>
+            <strong>Student portal</strong>
+            <span>Student accounts and school resources.</span>
+          </button>
+          <button class="auth-choice" data-auth="staff">
+            <div style="font-size:23px">🛡️</div>
+            <strong>Staff portal</strong>
+            <span>Separate sign-in for authorized school staff.</span>
+          </button>
+        </div>
+
+        <div class="card auth-card">
+          <div class="tabs">
+            <button class="tab active" data-mode="login">Sign in</button>
+            <button class="tab" data-mode="signup">Create account</button>
+          </div>
+          <form id="studentAuthForm">
+            <div class="field signup-only hidden">
+              <label for="studentName">Full name</label>
+              <input id="studentName" maxlength="100" autocomplete="name" placeholder="Your full name">
+            </div>
+            <div class="field signup-only hidden">
+              <label for="studentClass">Class / section</label>
+              <input id="studentClass" maxlength="30" placeholder="e.g. Class 10 A">
+            </div>
+            <div class="field">
+              <label for="studentEmail">Email address</label>
+              <input id="studentEmail" type="email" autocomplete="email" required placeholder="you@example.com">
+            </div>
+            <div class="field">
+              <label for="studentPassword">Password</label>
+              <input id="studentPassword" type="password" autocomplete="current-password" minlength="8" required placeholder="At least 8 characters">
+            </div>
+            <button class="primary" type="submit" id="studentSubmit">Sign in as student</button>
+            <div id="studentAuthMessage" aria-live="polite"></div>
+          </form>
+          <p class="muted small" style="margin:18px 0 0">Authentication is not enabled yet. This form will be connected to Supabase next.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="page hidden" id="page-staffAuth">
+      <div class="auth-wrap">
+        <div class="eyebrow">AUTHORIZED PERSONNEL</div>
+        <h1>Staff portal</h1>
+        <p class="muted">A separate entry point for teachers and authorized administrators.</p>
+        <div class="card auth-card">
+          <div class="stat-icon">🛡️</div>
+          <h2>Staff sign in</h2>
+          <p class="muted small">Staff access will be checked against assigned roles in the backend. A staff email alone will not grant staff permissions.</p>
+          <form id="staffAuthForm">
+            <div class="field">
+              <label for="staffEmail">Staff email</label>
+              <input id="staffEmail" type="email" autocomplete="username" required placeholder="staff@school.edu">
+            </div>
+            <div class="field">
+              <label for="staffPassword">Password</label>
+              <input id="staffPassword" type="password" autocomplete="current-password" minlength="8" required placeholder="Enter your password">
+            </div>
+            <button class="primary" type="submit">Sign in as staff</button>
+            <div id="staffAuthMessage" aria-live="polite"></div>
+          </form>
+          <div class="notice">Staff account creation will not be public. An administrator will need to authorize staff accounts through the backend.</div>
+          <button class="secondary" data-page="auth">Go to student sign in</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="page hidden" id="page-dashboard">
+      <div class="eyebrow">PERSONAL WORKSPACE</div>
+      <h1 id="dashboardTitle">Your dashboard</h1>
+      <p class="muted" id="dashboardDescription">Your portal overview.</p>
+      <div class="card">
+        <div class="notice">This preview dashboard is not connected to real accounts yet. Your role and permissions will be verified by Supabase when the backend is implemented.</div>
+        <h2>Welcome</h2>
+        <p class="muted" id="dashboardEmail"></p>
+        <button class="secondary" data-page="notices">Browse notices</button>
+        <button class="secondary" data-page="lostfound">Lost & Found</button>
+        <button class="secondary" id="demoSignOut">Exit preview</button>
+      </div>
+      <div class="section-head"><h2>Staff tools</h2></div>
+      <div class="card hidden" id="staffTools">
+        <p class="muted">The report moderation queue and notice management tools will appear here after secure backend integration.</p>
+      </div>
+    </section>
+  </main>
 </div>
-</section>
 
-<section class="section" id="account">
-<h2>Student / Staff sign in</h2>
-<p class="muted">Students should register using their real name and class. Staff access must be assigned by the portal administrator.</p>
-<div class="card">
-<div class="formgrid">
-<label class="field"><span>Email</span><input id="email" type="email" autocomplete="username" placeholder="you@example.com"></label>
-<label class="field"><span>Password</span><input id="password" type="password" autocomplete="current-password" minlength="8" placeholder="At least 8 characters"></label>
-<label class="field" id="nameWrap"><span>Full name (for sign-up)</span><input id="fullName" autocomplete="name" placeholder="Your full name"></label>
-<label class="field" id="classWrap"><span>Class (for sign-up)</span><input id="studentClass" placeholder="e.g. 8-A"></label>
-</div>
-<div class="actions">
-<button id="signupBtn" type="button">Create student account</button>
-<button class="secondary" id="loginBtn" type="button">Sign in</button>
-<button class="secondary hidden" id="logoutBtn" type="button">Sign out</button>
-</div>
-<div id="authStatus" class="status" role="status">Enter your Supabase details in Setup below.</div>
-<p class="small muted">If email confirmation is enabled, confirm your email before signing in. Never share your password.</p>
-</div>
-</section>
+<footer>KPS Portal · School Hub · Frontend preview — no real account or report data is stored.</footer>
+<div class="toast hidden" id="toast" role="status" aria-live="polite"></div>
 
-<section class="section" id="lostfound">
-<h2>Report a lost or found item</h2>
-<p class="muted">Sign in first. Do not include private information in the item description.</p>
-<div class="card">
-<form id="reportForm">
-<div class="formgrid">
-<label class="field"><span>Report type</span><select id="reportType"><option value="lost">I lost an item</option><option value="found">I found an item</option></select></label>
-<label class="field"><span>Item name</span><input id="itemName" required maxlength="100" placeholder="e.g. Blue water bottle"></label>
-<label class="field full"><span>Description</span><textarea id="description" required maxlength="1000" placeholder="Colour, brand, identifying details..."></textarea></label>
-<label class="field"><span>Where was it lost/found?</span><input id="location" maxlength="160" placeholder="e.g. Library"></label>
-<label class="field"><span>Date</span><input id="incidentDate" type="date"></label>
-</div>
-<div class="actions"><button type="submit">Submit for staff review</button></div>
-</form>
-<div id="reportStatus" class="status" role="status">Sign in to submit a report.</div>
-</div>
-<div class="card" style="margin-top:14px">
-<div class="row"><h3>My reports</h3><button class="secondary" id="refreshMine" type="button">Refresh</button></div>
-<div id="myReports" class="muted">Sign in to see your reports.</div>
-</div>
-</section>
-
-<section class="section" id="notices">
-<h2>School Notice Board</h2><p class="muted">Only approved item notices should appear here.</p>
-<div id="publicNotices"><p class="muted">Connect Supabase to load approved notices.</p></div>
-</section>
-
-<section class="section hidden" id="admin">
-<h2>School Staff Dashboard</h2><p class="muted">For authorized teacher-admin accounts only.</p>
-<div class="row"><h3>Pending reports</h3><button id="refreshAdmin" class="secondary" type="button">Refresh</button></div>
-<div id="adminReports"></div><div id="adminStatus" class="status" role="status"></div>
-<h3>Assembly announcement</h3><textarea id="assemblyText" placeholder="Assembly announcement..."></textarea>
-<button id="copyAssembly" class="secondary" type="button">Prepare announcement</button>
-</section>
-
-<section class="section" id="kpai"><div class="card">
-<h2>K.P AI</h2><p class="muted">Open the existing K.P AI study assistant.</p>
-<a href="https://github.com/RichChiken/kp-ai-website/releases/tag/v1.0.0">Open K.P AI →</a>
-</div></section>
-
-<section class="section">
-<details class="card" open>
-<summary><strong>Setup: connect Supabase</strong></summary>
-<p class="muted small">Paste your Supabase Project URL and publishable key. They are not saved by this page. Never use a secret/service-role key here.</p>
-<label class="field"><span>Project URL</span><input id="projectUrl" placeholder="https://your-project.supabase.co" autocomplete="url"></label>
-<label class="field" style="margin-top:10px"><span>Publishable key</span><input id="publishableKey" placeholder="sb_publishable_..." autocomplete="off"></label>
-<button id="connectBtn" style="margin-top:12px" type="button">Connect</button>
-<div id="connectionStatus" class="status" role="status" aria-live="polite">Not connected.</div>
-</details>
-</section>
-</main>
-
-<footer><div class="wrap">KPS School Portal · Student reports require staff review. Do not submit sensitive personal information.</div></footer>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-'use strict';
+"use strict";
 
-let sb = null;
-let user = null;
-let profile = null;
-let connectedUrl = '';
-let connectedKey = '';
+const $ = (id) => document.getElementById(id);
+const pages = ["home", "notices", "lostfound", "ai", "auth", "staffAuth", "dashboard"];
+let authMode = "login";
+let selectedAuth = "student";
+let demoReports = [];
+let demoUser = null;
+let toastTimer = null;
 
-const $ = id => document.getElementById(id);
-const status = (id, text, kind='') => {
-  const el = $(id);
-  el.textContent = text;
-  el.className = 'status' + (kind ? ' ' + kind : '');
-};
-const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({
-  '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
-}[c]));
+const demoNotices = [
+  {
+    icon: "📢",
+    title: "Welcome to KPS Portal",
+    text: "Your new digital school hub for notices, student resources, and Lost & Found.",
+    tag: "PORTAL"
+  },
+  {
+    icon: "📚",
+    title: "Stay updated",
+    text: "Check the notice board regularly for official school announcements.",
+    tag: "REMINDER"
+  },
+  {
+    icon: "🔎",
+    title: "Lost something at school?",
+    text: "Use Lost & Found to prepare a report. Real submission will be enabled with the backend.",
+    tag: "LOST & FOUND"
+  }
+];
 
-function showSignedOut() {
-  $('logoutBtn').classList.add('hidden');
-  $('signupBtn').classList.remove('hidden');
-  $('loginBtn').classList.remove('hidden');
-  $('nameWrap').classList.remove('hidden');
-  $('classWrap').classList.remove('hidden');
-  $('admin').classList.add('hidden');
+function escapeHTML(value) {
+  return String(value ?? "").replace(/[&<>"']/g, (char) => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;"
+  })[char]);
 }
-function showSignedIn() {
-  $('logoutBtn').classList.remove('hidden');
-  $('signupBtn').classList.add('hidden');
-  $('loginBtn').classList.add('hidden');
-  $('nameWrap').classList.add('hidden');
-  $('classWrap').classList.add('hidden');
+
+function showToast(message) {
+  const toast = $("toast");
+  toast.textContent = message;
+  toast.classList.remove("hidden");
+  if (toastTimer) clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toast.classList.add("hidden"), 3200);
 }
 
-async function connect() {
-  const url = $('projectUrl').value.trim().replace(/\/+$/, '');
-  const key = $('publishableKey').value.trim();
+function showMessage(id, message, type = "") {
+  const element = $(id);
+  if (!element) return;
+  element.className = type ? `notice ${type}` : "notice";
+  element.textContent = message;
+}
 
-  if (!url || !key) {
-    status('connectionStatus','Enter the Project URL and publishable key.','error');
-    return;
-  }
-  if (!/^https:\/\/[a-z0-9-]+\.supabase\.co$/i.test(url)) {
-    status('connectionStatus','Invalid URL. Copy the Project URL from Supabase settings.','error');
-    return;
-  }
-  if (!window.supabase || typeof window.supabase.createClient !== 'function') {
-    status('connectionStatus','Supabase library failed to load. Check internet and refresh.','error');
-    return;
-  }
+function goTo(page) {
+  if (!pages.includes(page)) page = "home";
 
-  $('connectBtn').disabled = true;
-  $('connectBtn').textContent = 'Connecting…';
-  status('connectionStatus','Connecting to Supabase…');
+  pages.forEach((name) => {
+    const section = $(`page-${name}`);
+    if (section) section.classList.toggle("hidden", name !== page);
+  });
 
-  try {
-    if (!sb || connectedUrl !== url || connectedKey !== key) {
-      sb = window.supabase.createClient(url, key);
-      connectedUrl = url;
-      connectedKey = key;
-      user = null;
-      profile = null;
+  document.querySelectorAll("[data-page]").forEach((button) => {
+    if (button.classList.contains("nav-btn")) {
+      button.classList.toggle("active", button.dataset.page === page);
     }
+  });
 
-    // Keep the status visible while session loading runs.
-    const result = await Promise.race([
-      sb.auth.getSession(),
-      new Promise((_, reject) =>
-        setTimeout(() => reject(new Error('Timed out. Check your internet, Project URL and key.')), 12000)
-      )
-    ]);
+  if (page === "auth") setAuthChoice("student");
+  if (page === "staffAuth") setAuthChoice("staff");
 
-    if (result.error) throw result.error;
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
 
-    status('connectionStatus','Supabase client responded. Loading account status…','ok');
-    await refreshSession();
+document.querySelectorAll("[data-page]").forEach((element) => {
+  element.addEventListener("click", () => goTo(element.dataset.page));
+});
 
-    status('connectionStatus','Connection check finished. See account status below.','ok');
-  } catch (error) {
-    status('connectionStatus','Connection failed: ' + (error.message || String(error)),'error');
-  } finally {
-    $('connectBtn').disabled = false;
-    $('connectBtn').textContent = 'Connect';
+document.querySelectorAll("[data-auth]").forEach((button) => {
+  button.addEventListener("click", () => setAuthChoice(button.dataset.auth));
+});
+
+function setAuthChoice(choice) {
+  selectedAuth = choice === "staff" ? "staff" : "student";
+  document.querySelectorAll("[data-auth]").forEach((button) => {
+    button.classList.toggle("selected", button.dataset.auth === selectedAuth);
+  });
+
+  if (selectedAuth === "staff") {
+    goTo("staffAuth");
+  } else if (!$("page-auth").classList.contains("hidden")) {
+    updateAuthMode();
   }
 }
-$('connectBtn').addEventListener('click', connect);
 
-async function refreshSession() {
-  if (!sb) {
-    status('authStatus','Connect Supabase first.','error');
+document.querySelectorAll("[data-mode]").forEach((button) => {
+  button.addEventListener("click", () => {
+    authMode = button.dataset.mode;
+    updateAuthMode();
+  });
+});
+
+function updateAuthMode() {
+  document.querySelectorAll("[data-mode]").forEach((button) => {
+    button.classList.toggle("active", button.dataset.mode === authMode);
+  });
+
+  document.querySelectorAll(".signup-only").forEach((element) => {
+    element.classList.toggle("hidden", authMode !== "signup");
+  });
+
+  $("studentName").required = authMode === "signup";
+  $("studentClass").required = authMode === "signup";
+  $("studentPassword").autocomplete = authMode === "signup" ? "new-password" : "current-password";
+  $("studentSubmit").textContent = authMode === "signup" ? "Create student account" : "Sign in as student";
+  $("studentAuthMessage").replaceChildren();
+}
+
+function renderNotices() {
+  const html = demoNotices.map((notice) => `
+    <article class="list-item">
+      <div class="list-icon">${notice.icon}</div>
+      <div style="flex:1;min-width:0">
+        <div class="tag">${escapeHTML(notice.tag)}</div>
+        <h3 style="margin-top:9px">${escapeHTML(notice.title)}</h3>
+        <p>${escapeHTML(notice.text)}</p>
+      </div>
+    </article>
+  `).join("");
+
+  $("homeNotices").innerHTML = html;
+  $("noticeList").innerHTML = html;
+}
+
+function renderReports() {
+  const container = $("reportList");
+
+  if (demoReports.length === 0) {
+    container.innerHTML = '<div class="empty">No demo reports yet.<br><span class="small">Your submitted preview reports will appear here.</span></div>';
     return;
   }
 
-  const {data,error} = await sb.auth.getSession();
-  if (error) {
-    status('authStatus','Session error: '+error.message,'error');
-    throw error;
-  }
-
-  user = data.session?.user || null;
-  profile = null;
-
-  if (!user) {
-    showSignedOut();
-    status('authStatus','Supabase is connected. You are not signed in.','ok');
-    status('reportStatus','Sign in to submit a report.');
-    await loadNotices();
-    return;
-  }
-
-  const result = await sb.from('profiles')
-    .select('role,full_name,student_class')
-    .eq('id',user.id)
-    .maybeSingle();
-
-  if (!result.error) profile = result.data;
-  else console.warn('Profile lookup:',result.error.message);
-
-  showSignedIn();
-  status('authStatus','Signed in: '+user.email+
-    (profile?.role==='teacher_admin'?' · Teacher admin':''),'ok');
-
-  $('admin').classList.toggle('hidden',profile?.role!=='teacher_admin');
-  await loadMine();
-  await loadNotices();
-  if (profile?.role==='teacher_admin') await loadAdmin();
+  container.innerHTML = demoReports.map((report) => `
+    <article class="list-item">
+      <div class="list-icon">${report.type === "Lost" ? "🔎" : "📦"}</div>
+      <div style="flex:1;min-width:0">
+        <div class="tag">${escapeHTML(report.type)} · DEMO</div>
+        <h3 style="margin-top:9px">${escapeHTML(report.name)}</h3>
+        <p>${escapeHTML(report.description)}</p>
+        <p style="margin-top:6px">📍 ${escapeHTML(report.location)} · ${escapeHTML(report.date)}</p>
+      </div>
+    </article>
+  `).join("");
 }
 
-$('signupBtn').addEventListener('click',async()=>{
-  if(!sb){status('authStatus','Connect Supabase first.','error');return;}
-  const email=$('email').value.trim();
-  const password=$('password').value;
-  const full_name=$('fullName').value.trim();
-  const student_class=$('studentClass').value.trim();
-
-  if(!email||!password||!full_name||!student_class){
-    status('authStatus','Enter email, password, full name and class.','error');return;
-  }
-  if(password.length<8){
-    status('authStatus','Password must be at least 8 characters.','error');return;
-  }
-
-  try{
-    const {data,error}=await sb.auth.signUp({
-      email,password,options:{data:{full_name,student_class}}
-    });
-    if(error){status('authStatus',error.message,'error');return;}
-    status('authStatus',data.session?'Account created. Loading session…':'Account created. Check your email, confirm it, then sign in.','ok');
-    if(data.session) await refreshSession();
-  }catch(error){status('authStatus',error.message||String(error),'error');}
-});
-
-$('loginBtn').addEventListener('click',async()=>{
-  if(!sb){status('authStatus','Connect Supabase first.','error');return;}
-  try{
-    const {error}=await sb.auth.signInWithPassword({
-      email:$('email').value.trim(),
-      password:$('password').value
-    });
-    if(error){status('authStatus',error.message,'error');return;}
-    await refreshSession();
-  }catch(error){status('authStatus',error.message||String(error),'error');}
-});
-
-$('logoutBtn').addEventListener('click',async()=>{
-  if(!sb)return;
-  try{
-    const {error}=await sb.auth.signOut();
-    if(error)throw error;
-    user=null;profile=null;
-    showSignedOut();
-    await refreshSession();
-  }catch(error){status('authStatus',error.message||String(error),'error');}
-});
-
-$('reportForm').addEventListener('submit',async event=>{
+$("reportForm").addEventListener("submit", (event) => {
   event.preventDefault();
-  if(!sb||!user){status('reportStatus','Connect and sign in first.','error');return;}
-  if(!profile?.full_name||!profile?.student_class){
-    status('reportStatus','Student profile is missing required details. Ask the portal administrator to configure profiles.','error');return;
-  }
-  if(profile.role==='teacher_admin'){
-    status('reportStatus','Use a student account to submit reports.','error');return;
-  }
 
-  const payload={
-    student_id:user.id,
-    student_name:profile.full_name,
-    student_class:profile.student_class,
-    report_type:$('reportType').value,
-    item_name:$('itemName').value.trim(),
-    description:$('description').value.trim(),
-    location:$('location').value.trim()||null,
-    incident_date:$('incidentDate').value||null,
-    status:'pending'
+  const report = {
+    type: $("reportType").value,
+    name: $("itemName").value.trim(),
+    location: $("itemLocation").value.trim(),
+    date: $("itemDate").value,
+    description: $("itemDescription").value.trim()
   };
 
-  try{
-    const {error}=await sb.from('lost_found_reports').insert(payload);
-    if(error)throw error;
-    event.target.reset();
-    status('reportStatus','Report submitted for staff review.','ok');
-    await loadMine();
-  }catch(error){status('reportStatus',error.message||String(error),'error');}
-});
-
-async function loadMine(){
-  if(!sb||!user){$('myReports').textContent='Sign in to see your reports.';return;}
-  try{
-    const {data,error}=await sb.from('lost_found_reports')
-      .select('id,item_name,report_type,status,created_at')
-      .eq('student_id',user.id).order('created_at',{ascending:false});
-    if(error)throw error;
-    $('myReports').innerHTML=data.length?data.map(r=>`
-      <div class="notice"><div class="row"><h3>${esc(r.item_name)}</h3>
-      <span class="pill">${esc(r.status)}</span></div>
-      <p class="muted small">${esc(r.report_type)} · ${esc(new Date(r.created_at).toLocaleString())}</p></div>
-    `).join(''):'No reports yet.';
-  }catch(error){$('myReports').textContent='Could not load reports: '+(error.message||String(error));}
-}
-
-async function loadNotices(){
-  if(!sb){$('publicNotices').textContent='Connect Supabase to load notices.';return;}
-  try{
-    const {data,error}=await sb.from('public_notices')
-      .select('id,item_name,report_type,description,location,incident_date,created_at')
-      .order('created_at',{ascending:false}).limit(100);
-    if(error)throw error;
-    $('publicNotices').innerHTML=data.length?data.map(n=>`
-      <article class="notice"><div class="row"><h3>${esc(n.item_name)}</h3>
-      <span class="pill">${esc(n.report_type==='lost'?'Lost item':'Found item')}</span></div>
-      <p>${esc(n.description)}</p>
-      <p class="muted small">${n.location?'Location: '+esc(n.location)+' · ':''}${n.incident_date?'Date: '+esc(n.incident_date):''}</p></article>
-    `).join(''):'No approved Lost & Found notices right now.';
-  }catch(error){
-    $('publicNotices').textContent='Notices unavailable: '+(error.message||String(error))+
-      '. The public_notices table or its permissions may need setup.';
+  if (!report.name || !report.location || !report.date || !report.description) {
+    showMessage("reportMessage", "Please complete every field.", "error");
+    return;
   }
-}
 
-async function loadAdmin(){
-  if(!sb||profile?.role!=='teacher_admin')return;
-  try{
-    const {data,error}=await sb.from('lost_found_reports').select('*')
-      .in('status',['pending','approved'])
-      .order('created_at',{ascending:false}).limit(100);
-    if(error)throw error;
-
-    $('adminReports').innerHTML=data.length?data.map(r=>`
-      <article class="notice"><div class="row"><h3>${esc(r.item_name)} <span class="pill">${esc(r.status)}</span></h3>
-      <span>${esc(r.report_type)}</span></div><p>${esc(r.description)}</p>
-      <p class="muted small">Student: ${esc(r.student_name)} · Class: ${esc(r.student_class)} · ${esc(r.location||'Location not given')} · ${esc(r.incident_date||'Date not given')}</p>
-      <div class="actions">${r.status==='pending'
-        ?`<button data-action="approve" data-id="${esc(r.id)}">Approve notice</button><button class="danger" data-action="reject" data-id="${esc(r.id)}">Reject</button>`
-        :`<button class="secondary" data-action="returned" data-id="${esc(r.id)}">Mark returned</button>`}</div></article>
-    `).join(''):'No reports to review.';
-
-    $('adminReports').querySelectorAll('button[data-action]').forEach(b=>
-      b.addEventListener('click',()=>moderate(b.dataset.id,b.dataset.action))
-    );
-  }catch(error){status('adminStatus',error.message||String(error),'error');}
-}
-
-async function moderate(id,action){
-  if(!sb||profile?.role!=='teacher_admin')return;
-  try{
-    const {data:r,error:readError}=await sb.from('lost_found_reports').select('*').eq('id',id).single();
-    if(readError)throw readError;
-
-    const nextStatus=action==='approve'?'approved':action==='reject'?'rejected':'returned';
-    const {error}=await sb.from('lost_found_reports').update({status:nextStatus}).eq('id',id);
-    if(error)throw error;
-
-    if(action==='approve'){
-      const {error:pubError}=await sb.from('public_notices').insert({
-        report_id:id,item_name:r.item_name,report_type:r.report_type,
-        description:r.description,location:r.location,incident_date:r.incident_date
-      });
-      if(pubError)throw pubError;
-    }else{
-      const {error:deleteError}=await sb.from('public_notices').delete().eq('report_id',id);
-      if(deleteError)throw deleteError;
-    }
-
-    status('adminStatus','Report updated.','ok');
-    await loadAdmin();await loadNotices();await loadMine();
-  }catch(error){status('adminStatus',error.message||String(error),'error');}
-}
-
-$('refreshMine').addEventListener('click',loadMine);
-$('refreshAdmin').addEventListener('click',loadAdmin);
-
-$('copyAssembly').addEventListener('click',async()=>{
-  if(!sb){status('adminStatus','Connect Supabase first.','error');return;}
-  try{
-    const {data,error}=await sb.from('public_notices')
-      .select('item_name,report_type,location')
-      .order('created_at',{ascending:false}).limit(20);
-    if(error)throw error;
-    const lines=data.map(n=>`${n.report_type==='lost'?'Lost':'Found'}: ${n.item_name}${n.location?' near '+n.location:''}.`);
-    $('assemblyText').value=lines.length
-      ?'Good morning. Please note the following Lost and Found announcements. '+lines.join(' ')+' Please contact the authorized school office if you recognise an item. Thank you.'
-      :'There are no current approved Lost and Found announcements.';
-  }catch(error){status('adminStatus',error.message||String(error),'error');}
+  demoReports.unshift(report);
+  renderReports();
+  $("reportForm").reset();
+  showMessage("reportMessage", "Demo report added to this page. It has NOT been sent to school staff or saved to a database.", "success");
 });
+
+$("studentAuthForm").addEventListener("submit", (event) => {
+  event.preventDefault();
+
+  const email = $("studentEmail").value.trim();
+  const password = $("studentPassword").value;
+
+  if (!email || password.length < 8) {
+    showMessage("studentAuthMessage", "Enter a valid email and a password of at least 8 characters.", "error");
+    return;
+  }
+
+  if (authMode === "signup" && (!$("studentName").value.trim() || !$("studentClass").value.trim())) {
+    showMessage("studentAuthMessage", "Enter your name and class.", "error");
+    return;
+  }
+
+  showMessage(
+    "studentAuthMessage",
+    "Frontend ready, but account creation and sign-in are not connected yet. No account was created and your password was not sent anywhere.",
+    "error"
+  );
+});
+
+$("staffAuthForm").addEventListener("submit", (event) => {
+  event.preventDefault();
+
+  const email = $("staffEmail").value.trim();
+  const password = $("staffPassword").value;
+
+  if (!email || password.length < 8) {
+    showMessage("staffAuthMessage", "Enter a valid staff email and password.", "error");
+    return;
+  }
+
+  showMessage(
+    "staffAuthMessage",
+    "Staff authentication is not connected yet. No sign-in was attempted. Staff access will be verified securely by the backend.",
+    "error"
+  );
+});
+
+$("headerLogin").addEventListener("click", () => goTo("auth"));
+
+$("demoSignOut").addEventListener("click", () => {
+  demoUser = null;
+  $("headerStatus").textContent = "Guest access";
+  $("headerLogin").classList.remove("hidden");
+  goTo("home");
+  showToast("Exited the local preview.");
+});
+
+function init() {
+  renderNotices();
+  renderReports();
+  updateAuthMode();
+
+  const today = new Date();
+  const localDate = new Date(today.getTime() - today.getTimezoneOffset() * 60000)
+    .toISOString().slice(0, 10);
+  $("itemDate").value = localDate;
+}
+
+init();
 </script>
 </body>
 </html>
